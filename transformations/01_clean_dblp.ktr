@@ -1,0 +1,532 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<transformation>
+  <info>
+    <name>01_clean_dblp</name>
+    <description>Reads DBLP article and inproceedings CSV files and removes rows where both author and year are empty or null</description>
+    <extended_description/>
+    <trans_version/>
+    <trans_type>Normal</trans_type>
+    <trans_status>0</trans_status>
+    <directory>/</directory>
+    <parameters/>
+    <log>
+      <trans-log-table><connection/><schema/><table/><size_limit_lines/><interval/><timeout_days/></trans-log-table>
+      <perf-log-table><connection/><schema/><table/><interval/><timeout_days/></perf-log-table>
+      <channel-log-table><connection/><schema/><table/><timeout_days/></channel-log-table>
+      <step-log-table><connection/><schema/><table/><timeout_days/></step-log-table>
+      <metrics-log-table><connection/><schema/><table/><timeout_days/></metrics-log-table>
+    </log>
+    <maxdate><connection/><table/><field/><offset>0.0</offset><maxdiff>0.0</maxdiff></maxdate>
+    <size_rowset>10000</size_rowset>
+    <sleep_time_empty>50</sleep_time_empty>
+    <sleep_time_full>50</sleep_time_full>
+    <unique_connections>N</unique_connections>
+    <feedback_shown>Y</feedback_shown>
+    <feedback_size>50000</feedback_size>
+    <using_thread_priorities>Y</using_thread_priorities>
+    <shared_objects_file/>
+    <capture_step_performance>N</capture_step_performance>
+    <step_performance_capturing_delay>1000</step_performance_capturing_delay>
+    <step_performance_capturing_size_limit>100</step_performance_capturing_size_limit>
+    <dependencies/>
+    <partitionschemas/>
+    <slaveservers/>
+    <clusterschemas/>
+    <created_user>Administrator</created_user>
+    <created_date>2026/04/17 12:00:00.000</created_date>
+    <modified_user>Administrator</modified_user>
+    <modified_date>2026/04/17 12:00:00.000</modified_date>
+    <key_for_session_key>H4sIAAAAAAAAAAMAAAAAAAAAAAA=</key_for_session_key>
+    <is_key_private>N</is_key_private>
+  </info>
+
+  <notepads>
+    <notepad>
+      <note>STREAM 1 — Articles&#10;input_article.csv → normalize nulls → filter invalid → cleaned_article.csv</note>
+      <xloc>100</xloc><yloc>40</yloc><width>420</width><heigth>40</heigth>
+      <fontname>Arial</fontname><fontsize>10</fontsize><fontbold>N</fontbold><fontitalic>N</fontitalic>
+      <fontcolorred>0</fontcolorred><fontcolorgreen>0</fontcolorgreen><fontcolorblue>0</fontcolorblue>
+      <backgroundcolorred>255</backgroundcolorred><backgroundcolorgreen>235</backgroundcolorgreen><backgroundcolorblue>170</backgroundcolorblue>
+      <bordercolorred>100</bordercolorred><bordercolorgreen>100</bordercolorgreen><bordercolorblue>100</bordercolorblue>
+      <drawshadow>Y</drawshadow>
+    </notepad>
+    <notepad>
+      <note>STREAM 2 — Inproceedings&#10;input_inproceedings.csv → normalize nulls → filter invalid → cleaned_inproceedings.csv</note>
+      <xloc>100</xloc><yloc>240</yloc><width>460</width><heigth>40</heigth>
+      <fontname>Arial</fontname><fontsize>10</fontsize><fontbold>N</fontbold><fontitalic>N</fontitalic>
+      <fontcolorred>0</fontcolorred><fontcolorgreen>0</fontcolorgreen><fontcolorblue>0</fontcolorblue>
+      <backgroundcolorred>170</backgroundcolorred><backgroundcolorgreen>220</backgroundcolorgreen><backgroundcolorblue>255</backgroundcolorblue>
+      <bordercolorred>100</bordercolorred><bordercolorgreen>100</bordercolorgreen><bordercolorblue>100</bordercolorblue>
+      <drawshadow>Y</drawshadow>
+    </notepad>
+  </notepads>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       STREAM 1 : ARTICLES
+       ═══════════════════════════════════════════════════════════ -->
+
+  <step>
+    <name>Read Articles</name>
+    <type>CsvInput</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning><method>none</method><schema_name/></partitioning>
+    <filename>${Internal.Transformation.Filename.Directory}/../raw_data/dblp_dataset/input_article.csv</filename>
+    <filename_field/>
+    <rownum_field/>
+    <include_filename>N</include_filename>
+    <separator>;</separator>
+    <enclosure>&quot;</enclosure>
+    <header>Y</header>
+    <max_cols>2048</max_cols>
+    <max_rows>0</max_rows>
+    <lazy_conversion>N</lazy_conversion>
+    <add_filename_result>N</add_filename_result>
+    <parallel>N</parallel>
+    <newline_possible>N</newline_possible>
+    <encoding>UTF-8</encoding>
+    <fields>
+      <field><name>id</name><type>String</type><format/><currency/><decimal/><group/><length>-1</length><precision>-1</precision><trim_type>none</trim_type></field>
+      <field><name>author</name><type>String</type><format/><currency/><decimal/><group/><length>-1</length><precision>-1</precision><trim_type>none</trim_type></field>
+      <field><name>booktitle</name><type>String</type><format/><currency/><decimal/><group/><length>-1</length><precision>-1</precision><trim_type>none</trim_type></field>
+      <field><name>cdrom</name><type>String</type><format/><currency/><decimal/><group/><length>-1</length><precision>-1</precision><trim_type>none</trim_type></field>
+      <field><name>cite</name><type>String</type><format/><currency/><decimal/><group/><length>-1</length><precision>-1</precision><trim_type>none</trim_type></field>
+      <field><name>cite-label</name><type>String</type><format/><currency/><decimal/><group/><length>-1</length><precision>-1</precision><trim_type>none</trim_type></field>
+      <field><name>crossref</name><type>String</type><format/><currency/><decimal/><group/><length>-1</length><precision>-1</precision><trim_type>none</trim_type></field>
+      <field><name>editor</name><type>String</type><format/><currency/><decimal/><group/><length>-1</length><precision>-1</precision><trim_type>none</trim_type></field>
+      <field><name>ee</name><type>String</type><format/><currency/><decimal/><group/><length>-1</length><precision>-1</precision><trim_type>none</trim_type></field>
+      <field><name>i</name><type>String</type><format/><currency/><decimal/><group/><length>-1</length><precision>-1</precision><trim_type>none</trim_type></field>
+      <field><name>journal</name><type>String</type><format/><currency/><decimal/><group/><length>-1</length><precision>-1</precision><trim_type>none</trim_type></field>
+      <field><name>key</name><type>String</type><format/><currency/><decimal/><group/><length>-1</length><precision>-1</precision><trim_type>none</trim_type></field>
+      <field><name>mdate</name><type>String</type><format/><currency/><decimal/><group/><length>-1</length><precision>-1</precision><trim_type>none</trim_type></field>
+      <field><name>month</name><type>String</type><format/><currency/><decimal/><group/><length>-1</length><precision>-1</precision><trim_type>none</trim_type></field>
+      <field><name>note</name><type>String</type><format/><currency/><decimal/><group/><length>-1</length><precision>-1</precision><trim_type>none</trim_type></field>
+      <field><name>number</name><type>String</type><format/><currency/><decimal/><group/><length>-1</length><precision>-1</precision><trim_type>none</trim_type></field>
+      <field><name>pages</name><type>String</type><format/><currency/><decimal/><group/><length>-1</length><precision>-1</precision><trim_type>none</trim_type></field>
+      <field><name>publisher</name><type>String</type><format/><currency/><decimal/><group/><length>-1</length><precision>-1</precision><trim_type>none</trim_type></field>
+      <field><name>publtype</name><type>String</type><format/><currency/><decimal/><group/><length>-1</length><precision>-1</precision><trim_type>none</trim_type></field>
+      <field><name>rating</name><type>String</type><format/><currency/><decimal/><group/><length>-1</length><precision>-1</precision><trim_type>none</trim_type></field>
+      <field><name>reviewid</name><type>String</type><format/><currency/><decimal/><group/><length>-1</length><precision>-1</precision><trim_type>none</trim_type></field>
+      <field><name>sub</name><type>String</type><format/><currency/><decimal/><group/><length>-1</length><precision>-1</precision><trim_type>none</trim_type></field>
+      <field><name>sup</name><type>String</type><format/><currency/><decimal/><group/><length>-1</length><precision>-1</precision><trim_type>none</trim_type></field>
+      <field><name>title</name><type>String</type><format/><currency/><decimal/><group/><length>-1</length><precision>-1</precision><trim_type>none</trim_type></field>
+      <field><name>title-bibtex</name><type>String</type><format/><currency/><decimal/><group/><length>-1</length><precision>-1</precision><trim_type>none</trim_type></field>
+      <field><name>tt</name><type>String</type><format/><currency/><decimal/><group/><length>-1</length><precision>-1</precision><trim_type>none</trim_type></field>
+      <field><name>url</name><type>String</type><format/><currency/><decimal/><group/><length>-1</length><precision>-1</precision><trim_type>none</trim_type></field>
+      <field><name>volume</name><type>String</type><format/><currency/><decimal/><group/><length>-1</length><precision>-1</precision><trim_type>none</trim_type></field>
+      <field><name>year</name><type>String</type><format/><currency/><decimal/><group/><length>-1</length><precision>-1</precision><trim_type>none</trim_type></field>
+    </fields>
+    <GUI><xloc>100</xloc><yloc>100</yloc><draw>Y</draw></GUI>
+  </step>
+
+  <step>
+    <name>Normalize Nulls - Articles</name>
+    <type>IfNull</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning><method>none</method><schema_name/></partitioning>
+    <typeonlyused>N</typeonlyused>
+    <replaceAllByValue/>
+    <replaceAllMask/>
+    <setEmptyStringAll>N</setEmptyStringAll>
+    <fields>
+      <field>
+        <name>author</name>
+        <value/>
+        <mask/>
+        <set_empty_string>N</set_empty_string>
+      </field>
+      <field>
+        <name>year</name>
+        <value/>
+        <mask/>
+        <set_empty_string>N</set_empty_string>
+      </field>
+    </fields>
+    <valueTypes/>
+    <GUI><xloc>320</xloc><yloc>100</yloc><draw>Y</draw></GUI>
+  </step>
+
+  <step>
+    <name>Filter Invalid Articles</name>
+    <type>FilterRows</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning><method>none</method><schema_name/></partitioning>
+    <send_true_to>Write Cleaned Articles</send_true_to>
+    <send_false_to/>
+    <compare>
+      <!-- Keep rows where NOT (author = '' AND year = '') -->
+      <condition>
+        <negated>Y</negated>
+        <conditions>
+          <condition>
+            <negated>N</negated>
+            <operator>-</operator>
+            <leftvalue>author</leftvalue>
+            <function>=</function>
+            <rightvalue/>
+            <value>
+              <name>constant</name>
+              <type>String</type>
+              <text/>
+              <length>-1</length>
+              <precision>-1</precision>
+              <isnull>N</isnull>
+              <mask/>
+            </value>
+          </condition>
+          <condition>
+            <negated>N</negated>
+            <operator>AND</operator>
+            <leftvalue>year</leftvalue>
+            <function>=</function>
+            <rightvalue/>
+            <value>
+              <name>constant</name>
+              <type>String</type>
+              <text/>
+              <length>-1</length>
+              <precision>-1</precision>
+              <isnull>N</isnull>
+              <mask/>
+            </value>
+          </condition>
+        </conditions>
+      </condition>
+    </compare>
+    <GUI><xloc>540</xloc><yloc>100</yloc><draw>Y</draw></GUI>
+  </step>
+
+  <step>
+    <name>Write Cleaned Articles</name>
+    <type>TextFileOutput</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning><method>none</method><schema_name/></partitioning>
+    <filename>C:/Users/Administrator/Desktop/Projects/Data_Visualizer/cleaned_data/cleaned_article</filename>
+    <create_parent_folder>Y</create_parent_folder>
+    <servlet_output>N</servlet_output>
+    <do_not_open_newfile_init>N</do_not_open_newfile_init>
+    <extention>csv</extention>
+    <append>N</append>
+    <split>N</split>
+    <haspartno>N</haspartno>
+    <add_date>N</add_date>
+    <add_time>N</add_time>
+    <SpecifyFormat>N</SpecifyFormat>
+    <date_time_format/>
+    <add_to_result_filenames>Y</add_to_result_filenames>
+    <zipped>N</zipped>
+    <splitevery/>
+    <encoding>UTF-8</encoding>
+    <filecompression>None</filecompression>
+    <header>Y</header>
+    <footer>N</footer>
+    <format>CR+LF</format>
+    <compression>None</compression>
+    <endedLine/>
+    <fileNameInField>N</fileNameInField>
+    <fileNameField/>
+    <new_line>&#13;&#10;</new_line>
+    <separator>;</separator>
+    <enclosure>&quot;</enclosure>
+    <enclosure_forced>N</enclosure_forced>
+    <enclosure_fix_disabled>N</enclosure_fix_disabled>
+    <fields>
+      <field><name>id</name><type>String</type><format/><currency/><decimal/><group/><nullif/><attribute>N</attribute><length>-1</length><precision>-1</precision></field>
+      <field><name>author</name><type>String</type><format/><currency/><decimal/><group/><nullif/><attribute>N</attribute><length>-1</length><precision>-1</precision></field>
+      <field><name>booktitle</name><type>String</type><format/><currency/><decimal/><group/><nullif/><attribute>N</attribute><length>-1</length><precision>-1</precision></field>
+      <field><name>cdrom</name><type>String</type><format/><currency/><decimal/><group/><nullif/><attribute>N</attribute><length>-1</length><precision>-1</precision></field>
+      <field><name>cite</name><type>String</type><format/><currency/><decimal/><group/><nullif/><attribute>N</attribute><length>-1</length><precision>-1</precision></field>
+      <field><name>cite-label</name><type>String</type><format/><currency/><decimal/><group/><nullif/><attribute>N</attribute><length>-1</length><precision>-1</precision></field>
+      <field><name>crossref</name><type>String</type><format/><currency/><decimal/><group/><nullif/><attribute>N</attribute><length>-1</length><precision>-1</precision></field>
+      <field><name>editor</name><type>String</type><format/><currency/><decimal/><group/><nullif/><attribute>N</attribute><length>-1</length><precision>-1</precision></field>
+      <field><name>ee</name><type>String</type><format/><currency/><decimal/><group/><nullif/><attribute>N</attribute><length>-1</length><precision>-1</precision></field>
+      <field><name>i</name><type>String</type><format/><currency/><decimal/><group/><nullif/><attribute>N</attribute><length>-1</length><precision>-1</precision></field>
+      <field><name>journal</name><type>String</type><format/><currency/><decimal/><group/><nullif/><attribute>N</attribute><length>-1</length><precision>-1</precision></field>
+      <field><name>key</name><type>String</type><format/><currency/><decimal/><group/><nullif/><attribute>N</attribute><length>-1</length><precision>-1</precision></field>
+      <field><name>mdate</name><type>String</type><format/><currency/><decimal/><group/><nullif/><attribute>N</attribute><length>-1</length><precision>-1</precision></field>
+      <field><name>month</name><type>String</type><format/><currency/><decimal/><group/><nullif/><attribute>N</attribute><length>-1</length><precision>-1</precision></field>
+      <field><name>note</name><type>String</type><format/><currency/><decimal/><group/><nullif/><attribute>N</attribute><length>-1</length><precision>-1</precision></field>
+      <field><name>number</name><type>String</type><format/><currency/><decimal/><group/><nullif/><attribute>N</attribute><length>-1</length><precision>-1</precision></field>
+      <field><name>pages</name><type>String</type><format/><currency/><decimal/><group/><nullif/><attribute>N</attribute><length>-1</length><precision>-1</precision></field>
+      <field><name>publisher</name><type>String</type><format/><currency/><decimal/><group/><nullif/><attribute>N</attribute><length>-1</length><precision>-1</precision></field>
+      <field><name>publtype</name><type>String</type><format/><currency/><decimal/><group/><nullif/><attribute>N</attribute><length>-1</length><precision>-1</precision></field>
+      <field><name>rating</name><type>String</type><format/><currency/><decimal/><group/><nullif/><attribute>N</attribute><length>-1</length><precision>-1</precision></field>
+      <field><name>reviewid</name><type>String</type><format/><currency/><decimal/><group/><nullif/><attribute>N</attribute><length>-1</length><precision>-1</precision></field>
+      <field><name>sub</name><type>String</type><format/><currency/><decimal/><group/><nullif/><attribute>N</attribute><length>-1</length><precision>-1</precision></field>
+      <field><name>sup</name><type>String</type><format/><currency/><decimal/><group/><nullif/><attribute>N</attribute><length>-1</length><precision>-1</precision></field>
+      <field><name>title</name><type>String</type><format/><currency/><decimal/><group/><nullif/><attribute>N</attribute><length>-1</length><precision>-1</precision></field>
+      <field><name>title-bibtex</name><type>String</type><format/><currency/><decimal/><group/><nullif/><attribute>N</attribute><length>-1</length><precision>-1</precision></field>
+      <field><name>tt</name><type>String</type><format/><currency/><decimal/><group/><nullif/><attribute>N</attribute><length>-1</length><precision>-1</precision></field>
+      <field><name>url</name><type>String</type><format/><currency/><decimal/><group/><nullif/><attribute>N</attribute><length>-1</length><precision>-1</precision></field>
+      <field><name>volume</name><type>String</type><format/><currency/><decimal/><group/><nullif/><attribute>N</attribute><length>-1</length><precision>-1</precision></field>
+      <field><name>year</name><type>String</type><format/><currency/><decimal/><group/><nullif/><attribute>N</attribute><length>-1</length><precision>-1</precision></field>
+    </fields>
+    <GUI><xloc>760</xloc><yloc>100</yloc><draw>Y</draw></GUI>
+  </step>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       STREAM 2 : INPROCEEDINGS
+       ═══════════════════════════════════════════════════════════ -->
+
+  <step>
+    <name>Read Inproceedings</name>
+    <type>CsvInput</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning><method>none</method><schema_name/></partitioning>
+    <filename>C:/Users/Administrator/Desktop/Projects/Data_Visualizer/raw_data/dblp_dataset/input_inproceedings.csv</filename>
+    <filename_field/>
+    <rownum_field/>
+    <include_filename>N</include_filename>
+    <separator>;</separator>
+    <enclosure>&quot;</enclosure>
+    <header>Y</header>
+    <max_cols>2048</max_cols>
+    <max_rows>0</max_rows>
+    <lazy_conversion>N</lazy_conversion>
+    <add_filename_result>N</add_filename_result>
+    <parallel>N</parallel>
+    <newline_possible>N</newline_possible>
+    <encoding>UTF-8</encoding>
+    <fields>
+      <field><name>id</name><type>String</type><format/><currency/><decimal/><group/><length>-1</length><precision>-1</precision><trim_type>none</trim_type></field>
+      <field><name>author</name><type>String</type><format/><currency/><decimal/><group/><length>-1</length><precision>-1</precision><trim_type>none</trim_type></field>
+      <field><name>booktitle</name><type>String</type><format/><currency/><decimal/><group/><length>-1</length><precision>-1</precision><trim_type>none</trim_type></field>
+      <field><name>cdrom</name><type>String</type><format/><currency/><decimal/><group/><length>-1</length><precision>-1</precision><trim_type>none</trim_type></field>
+      <field><name>cite</name><type>String</type><format/><currency/><decimal/><group/><length>-1</length><precision>-1</precision><trim_type>none</trim_type></field>
+      <field><name>cite-label</name><type>String</type><format/><currency/><decimal/><group/><length>-1</length><precision>-1</precision><trim_type>none</trim_type></field>
+      <field><name>crossref</name><type>String</type><format/><currency/><decimal/><group/><length>-1</length><precision>-1</precision><trim_type>none</trim_type></field>
+      <field><name>editor</name><type>String</type><format/><currency/><decimal/><group/><length>-1</length><precision>-1</precision><trim_type>none</trim_type></field>
+      <field><name>ee</name><type>String</type><format/><currency/><decimal/><group/><length>-1</length><precision>-1</precision><trim_type>none</trim_type></field>
+      <field><name>i</name><type>String</type><format/><currency/><decimal/><group/><length>-1</length><precision>-1</precision><trim_type>none</trim_type></field>
+      <field><name>key</name><type>String</type><format/><currency/><decimal/><group/><length>-1</length><precision>-1</precision><trim_type>none</trim_type></field>
+      <field><name>mdate</name><type>String</type><format/><currency/><decimal/><group/><length>-1</length><precision>-1</precision><trim_type>none</trim_type></field>
+      <field><name>month</name><type>String</type><format/><currency/><decimal/><group/><length>-1</length><precision>-1</precision><trim_type>none</trim_type></field>
+      <field><name>note</name><type>String</type><format/><currency/><decimal/><group/><length>-1</length><precision>-1</precision><trim_type>none</trim_type></field>
+      <field><name>number</name><type>String</type><format/><currency/><decimal/><group/><length>-1</length><precision>-1</precision><trim_type>none</trim_type></field>
+      <field><name>pages</name><type>String</type><format/><currency/><decimal/><group/><length>-1</length><precision>-1</precision><trim_type>none</trim_type></field>
+      <field><name>publtype</name><type>String</type><format/><currency/><decimal/><group/><length>-1</length><precision>-1</precision><trim_type>none</trim_type></field>
+      <field><name>sub</name><type>String</type><format/><currency/><decimal/><group/><length>-1</length><precision>-1</precision><trim_type>none</trim_type></field>
+      <field><name>sup</name><type>String</type><format/><currency/><decimal/><group/><length>-1</length><precision>-1</precision><trim_type>none</trim_type></field>
+      <field><name>title</name><type>String</type><format/><currency/><decimal/><group/><length>-1</length><precision>-1</precision><trim_type>none</trim_type></field>
+      <field><name>title-bibtex</name><type>String</type><format/><currency/><decimal/><group/><length>-1</length><precision>-1</precision><trim_type>none</trim_type></field>
+      <field><name>tt</name><type>String</type><format/><currency/><decimal/><group/><length>-1</length><precision>-1</precision><trim_type>none</trim_type></field>
+      <field><name>url</name><type>String</type><format/><currency/><decimal/><group/><length>-1</length><precision>-1</precision><trim_type>none</trim_type></field>
+      <field><name>year</name><type>String</type><format/><currency/><decimal/><group/><length>-1</length><precision>-1</precision><trim_type>none</trim_type></field>
+    </fields>
+    <GUI><xloc>100</xloc><yloc>320</yloc><draw>Y</draw></GUI>
+  </step>
+
+  <step>
+    <name>Normalize Nulls - Inproceedings</name>
+    <type>IfNull</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning><method>none</method><schema_name/></partitioning>
+    <typeonlyused>N</typeonlyused>
+    <replaceAllByValue/>
+    <replaceAllMask/>
+    <setEmptyStringAll>N</setEmptyStringAll>
+    <fields>
+      <field>
+        <name>author</name>
+        <value/>
+        <mask/>
+        <set_empty_string>N</set_empty_string>
+      </field>
+      <field>
+        <name>year</name>
+        <value/>
+        <mask/>
+        <set_empty_string>N</set_empty_string>
+      </field>
+    </fields>
+    <valueTypes/>
+    <GUI><xloc>320</xloc><yloc>320</yloc><draw>Y</draw></GUI>
+  </step>
+
+  <step>
+    <name>Filter Invalid Inproceedings</name>
+    <type>FilterRows</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning><method>none</method><schema_name/></partitioning>
+    <send_true_to>Write Cleaned Inproceedings</send_true_to>
+    <send_false_to/>
+    <compare>
+      <!-- Keep rows where NOT (author = '' AND year = '') -->
+      <condition>
+        <negated>Y</negated>
+        <conditions>
+          <condition>
+            <negated>N</negated>
+            <operator>-</operator>
+            <leftvalue>author</leftvalue>
+            <function>=</function>
+            <rightvalue/>
+            <value>
+              <name>constant</name>
+              <type>String</type>
+              <text/>
+              <length>-1</length>
+              <precision>-1</precision>
+              <isnull>N</isnull>
+              <mask/>
+            </value>
+          </condition>
+          <condition>
+            <negated>N</negated>
+            <operator>AND</operator>
+            <leftvalue>year</leftvalue>
+            <function>=</function>
+            <rightvalue/>
+            <value>
+              <name>constant</name>
+              <type>String</type>
+              <text/>
+              <length>-1</length>
+              <precision>-1</precision>
+              <isnull>N</isnull>
+              <mask/>
+            </value>
+          </condition>
+        </conditions>
+      </condition>
+    </compare>
+    <GUI><xloc>540</xloc><yloc>320</yloc><draw>Y</draw></GUI>
+  </step>
+
+  <step>
+    <name>Write Cleaned Inproceedings</name>
+    <type>TextFileOutput</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning><method>none</method><schema_name/></partitioning>
+    <filename>C:/Users/Administrator/Desktop/Projects/Data_Visualizer/cleaned_data/cleaned_inproceedings</filename>
+    <create_parent_folder>Y</create_parent_folder>
+    <servlet_output>N</servlet_output>
+    <do_not_open_newfile_init>N</do_not_open_newfile_init>
+    <extention>csv</extention>
+    <append>N</append>
+    <split>N</split>
+    <haspartno>N</haspartno>
+    <add_date>N</add_date>
+    <add_time>N</add_time>
+    <SpecifyFormat>N</SpecifyFormat>
+    <date_time_format/>
+    <add_to_result_filenames>Y</add_to_result_filenames>
+    <zipped>N</zipped>
+    <splitevery/>
+    <encoding>UTF-8</encoding>
+    <filecompression>None</filecompression>
+    <header>Y</header>
+    <footer>N</footer>
+    <format>CR+LF</format>
+    <compression>None</compression>
+    <endedLine/>
+    <fileNameInField>N</fileNameInField>
+    <fileNameField/>
+    <new_line>&#13;&#10;</new_line>
+    <separator>;</separator>
+    <enclosure>&quot;</enclosure>
+    <enclosure_forced>N</enclosure_forced>
+    <enclosure_fix_disabled>N</enclosure_fix_disabled>
+    <fields>
+      <field><name>id</name><type>String</type><format/><currency/><decimal/><group/><nullif/><attribute>N</attribute><length>-1</length><precision>-1</precision></field>
+      <field><name>author</name><type>String</type><format/><currency/><decimal/><group/><nullif/><attribute>N</attribute><length>-1</length><precision>-1</precision></field>
+      <field><name>booktitle</name><type>String</type><format/><currency/><decimal/><group/><nullif/><attribute>N</attribute><length>-1</length><precision>-1</precision></field>
+      <field><name>cdrom</name><type>String</type><format/><currency/><decimal/><group/><nullif/><attribute>N</attribute><length>-1</length><precision>-1</precision></field>
+      <field><name>cite</name><type>String</type><format/><currency/><decimal/><group/><nullif/><attribute>N</attribute><length>-1</length><precision>-1</precision></field>
+      <field><name>cite-label</name><type>String</type><format/><currency/><decimal/><group/><nullif/><attribute>N</attribute><length>-1</length><precision>-1</precision></field>
+      <field><name>crossref</name><type>String</type><format/><currency/><decimal/><group/><nullif/><attribute>N</attribute><length>-1</length><precision>-1</precision></field>
+      <field><name>editor</name><type>String</type><format/><currency/><decimal/><group/><nullif/><attribute>N</attribute><length>-1</length><precision>-1</precision></field>
+      <field><name>ee</name><type>String</type><format/><currency/><decimal/><group/><nullif/><attribute>N</attribute><length>-1</length><precision>-1</precision></field>
+      <field><name>i</name><type>String</type><format/><currency/><decimal/><group/><nullif/><attribute>N</attribute><length>-1</length><precision>-1</precision></field>
+      <field><name>key</name><type>String</type><format/><currency/><decimal/><group/><nullif/><attribute>N</attribute><length>-1</length><precision>-1</precision></field>
+      <field><name>mdate</name><type>String</type><format/><currency/><decimal/><group/><nullif/><attribute>N</attribute><length>-1</length><precision>-1</precision></field>
+      <field><name>month</name><type>String</type><format/><currency/><decimal/><group/><nullif/><attribute>N</attribute><length>-1</length><precision>-1</precision></field>
+      <field><name>note</name><type>String</type><format/><currency/><decimal/><group/><nullif/><attribute>N</attribute><length>-1</length><precision>-1</precision></field>
+      <field><name>number</name><type>String</type><format/><currency/><decimal/><group/><nullif/><attribute>N</attribute><length>-1</length><precision>-1</precision></field>
+      <field><name>pages</name><type>String</type><format/><currency/><decimal/><group/><nullif/><attribute>N</attribute><length>-1</length><precision>-1</precision></field>
+      <field><name>publtype</name><type>String</type><format/><currency/><decimal/><group/><nullif/><attribute>N</attribute><length>-1</length><precision>-1</precision></field>
+      <field><name>sub</name><type>String</type><format/><currency/><decimal/><group/><nullif/><attribute>N</attribute><length>-1</length><precision>-1</precision></field>
+      <field><name>sup</name><type>String</type><format/><currency/><decimal/><group/><nullif/><attribute>N</attribute><length>-1</length><precision>-1</precision></field>
+      <field><name>title</name><type>String</type><format/><currency/><decimal/><group/><nullif/><attribute>N</attribute><length>-1</length><precision>-1</precision></field>
+      <field><name>title-bibtex</name><type>String</type><format/><currency/><decimal/><group/><nullif/><attribute>N</attribute><length>-1</length><precision>-1</precision></field>
+      <field><name>tt</name><type>String</type><format/><currency/><decimal/><group/><nullif/><attribute>N</attribute><length>-1</length><precision>-1</precision></field>
+      <field><name>url</name><type>String</type><format/><currency/><decimal/><group/><nullif/><attribute>N</attribute><length>-1</length><precision>-1</precision></field>
+      <field><name>year</name><type>String</type><format/><currency/><decimal/><group/><nullif/><attribute>N</attribute><length>-1</length><precision>-1</precision></field>
+    </fields>
+    <GUI><xloc>760</xloc><yloc>320</yloc><draw>Y</draw></GUI>
+  </step>
+
+  <step_error_handling/>
+
+  <order>
+    <hop>
+      <from>Read Articles</from>
+      <to>Normalize Nulls - Articles</to>
+      <enabled>Y</enabled>
+      <evaluation>Y</evaluation>
+      <unconditional>Y</unconditional>
+    </hop>
+    <hop>
+      <from>Normalize Nulls - Articles</from>
+      <to>Filter Invalid Articles</to>
+      <enabled>Y</enabled>
+      <evaluation>Y</evaluation>
+      <unconditional>Y</unconditional>
+    </hop>
+    <hop>
+      <from>Filter Invalid Articles</from>
+      <to>Write Cleaned Articles</to>
+      <enabled>Y</enabled>
+      <evaluation>Y</evaluation>
+      <unconditional>N</unconditional>
+    </hop>
+    <hop>
+      <from>Read Inproceedings</from>
+      <to>Normalize Nulls - Inproceedings</to>
+      <enabled>Y</enabled>
+      <evaluation>Y</evaluation>
+      <unconditional>Y</unconditional>
+    </hop>
+    <hop>
+      <from>Normalize Nulls - Inproceedings</from>
+      <to>Filter Invalid Inproceedings</to>
+      <enabled>Y</enabled>
+      <evaluation>Y</evaluation>
+      <unconditional>Y</unconditional>
+    </hop>
+    <hop>
+      <from>Filter Invalid Inproceedings</from>
+      <to>Write Cleaned Inproceedings</to>
+      <enabled>Y</enabled>
+      <evaluation>Y</evaluation>
+      <unconditional>N</unconditional>
+    </hop>
+  </order>
+
+  <slave-step-copy-partition-distribution/>
+  <slave_transformation>N</slave_transformation>
+
+</transformation>
