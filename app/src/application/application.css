@@ -1,0 +1,14 @@
+.loading-box {
+	-fx-background-color: white;
+	-fx-padding: 20;
+	-fx-border-color: lightgray;
+	-fx-border-radius: 6;
+	-fx-background-radius: 6;
+	-fx-spacing: 10;
+	-fx-alignment: center;
+}
+
+.loading-indicator {
+	-fx-pref-width: 40;
+	-fx-pref-height: 40;
+}
