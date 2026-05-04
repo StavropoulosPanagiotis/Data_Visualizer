@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.chart.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/26"
+ fx:controller="gui.controller.AuthorController">
+
+ <top>
+  <HBox spacing="8" alignment="CENTER_LEFT">
+   <padding><Insets top="10" right="10" bottom="10" left="10"/></padding>
+   <Label text="Name:"/>
+   <TextField fx:id="nameField" promptText="Author name..." HBox.hgrow="ALWAYS"/>
+   <Label text="From:"/>
+   <Spinner fx:id="fromSpinner" prefWidth="85"/>
+   <Label text="To:"/>
+   <Spinner fx:id="toSpinner" prefWidth="85"/>
+   <Button text="Search" onAction="#handleSearch"/>
+  </HBox>
+ </top>
+
+ <center>
+  <SplitPane dividerPositions="0.35">
+   <BorderPane.margin><Insets top="0" right="10" bottom="10" left="10"/></BorderPane.margin>
+
+   <TableView fx:id="resultTable" minWidth="260">
+    <placeholder><Label text="No results."/></placeholder>
+    <columns>
+     <TableColumn fx:id="nameCol" text="Author Name"/>
+     <TableColumn fx:id="countCol" text="Publications" maxWidth="120" minWidth="120"/>
+    </columns>
+   </TableView>
+
+   <BorderPane minWidth="400">
+    <top>
+     <VBox spacing="4">
+      <padding><Insets top="8" right="10" bottom="6" left="10"/></padding>
+      <Label text="Author Profile" style="-fx-font-weight:bold; -fx-font-size:14;"/>
+      <GridPane hgap="12" vgap="3">
+       <Label text="Name:" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
+       <Label fx:id="statName" GridPane.columnIndex="1" GridPane.rowIndex="0"/>
+       <Label text="Active years:" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
+       <Label fx:id="statYears" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+       <Label text="Total publications:" GridPane.columnIndex="0" GridPane.rowIndex="2"/>
+       <Label fx:id="statTotal" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+       <Label text="Journals:" GridPane.columnIndex="0" GridPane.rowIndex="3"/>
+       <Label fx:id="statJournals" GridPane.columnIndex="1" GridPane.rowIndex="3"/>
+       <Label text="Conferences:" GridPane.columnIndex="0" GridPane.rowIndex="4"/>
+       <Label fx:id="statConf" GridPane.columnIndex="1" GridPane.rowIndex="4"/>
+       <Label text="Avg / year:" GridPane.columnIndex="0" GridPane.rowIndex="5"/>
+       <Label fx:id="statAvg" GridPane.columnIndex="1" GridPane.rowIndex="5"/>
+      </GridPane>
+     </VBox>
+    </top>
+    <center>
+     <LineChart fx:id="lineChart" title="Publications per Year" animated="false">
+      <BorderPane.margin><Insets top="4" right="10" bottom="4" left="10"/></BorderPane.margin>
+      <xAxis><CategoryAxis label="Year"/></xAxis>
+      <yAxis><NumberAxis label="Publications"/></yAxis>
+     </LineChart>
+    </center>
+    <bottom>
+     <VBox spacing="4">
+      <padding><Insets top="0" right="10" bottom="10" left="10"/></padding>
+      <Label text="Publications" style="-fx-font-weight:bold;"/>
+      <TableView fx:id="pubTable" prefHeight="200">
+       <placeholder><Label text="Select an author."/></placeholder>
+       <columns>
+        <TableColumn fx:id="pubTitleCol" text="Title"/>
+        <TableColumn fx:id="pubYearCol" text="Year" maxWidth="70" minWidth="70"/>
+        <TableColumn fx:id="pubTypeCol" text="Type" maxWidth="110" minWidth="110"/>
+        <TableColumn fx:id="pubVenueCol" text="Venue"/>
+       </columns>
+      </TableView>
+     </VBox>
+    </bottom>
+   </BorderPane>
+  </SplitPane>
+ </center>
+
+</BorderPane>

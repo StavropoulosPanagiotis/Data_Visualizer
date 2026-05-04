@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/26"
+ fx:controller="gui.controller.YearController">
+
+ <top>
+  <HBox spacing="8" alignment="CENTER_LEFT">
+   <padding><Insets top="10" right="10" bottom="10" left="10"/></padding>
+   <Label text="From:"/>
+   <Spinner fx:id="fromSpinner" prefWidth="90"/>
+   <Label text="To:"/>
+   <Spinner fx:id="toSpinner" prefWidth="90"/>
+   <Button text="Show" onAction="#handleShow"/>
+  </HBox>
+ </top>
+
+ <center>
+  <SplitPane dividerPositions="0.32">
+   <BorderPane.margin><Insets top="0" right="10" bottom="10" left="10"/></BorderPane.margin>
+
+   <TableView fx:id="resultTable" minWidth="260">
+    <placeholder><Label text="Press Show."/></placeholder>
+    <columns>
+     <TableColumn fx:id="yearCol" text="Year" maxWidth="80" minWidth="80"/>
+     <TableColumn fx:id="totalCol" text="Total"/>
+     <TableColumn fx:id="journalCol" text="Journals"/>
+     <TableColumn fx:id="confCol" text="Conferences"/>
+    </columns>
+   </TableView>
+
+   <BorderPane minWidth="380">
+    <top>
+     <VBox spacing="6">
+      <padding><Insets top="8" right="10" bottom="6" left="10"/></padding>
+      <Label text="Year Profile" style="-fx-font-weight:bold; -fx-font-size:14;"/>
+      <GridPane hgap="12" vgap="3">
+       <Label text="Total publications:" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
+       <Label fx:id="statTotal" GridPane.columnIndex="1" GridPane.rowIndex="0"/>
+       <Label text="Distinct journals:" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
+       <Label fx:id="statJournals" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+       <Label text="Distinct conferences:" GridPane.columnIndex="0" GridPane.rowIndex="2"/>
+       <Label fx:id="statConferences" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+       <Label text="Total authors:" GridPane.columnIndex="0" GridPane.rowIndex="3"/>
+       <Label fx:id="statTotalAuthors" GridPane.columnIndex="1" GridPane.rowIndex="3"/>
+       <Label text="Distinct authors:" GridPane.columnIndex="0" GridPane.rowIndex="4"/>
+       <Label fx:id="statDistinctAuthors" GridPane.columnIndex="1" GridPane.rowIndex="4"/>
+      </GridPane>
+      <Separator/>
+      <Label text="Filter Publications" style="-fx-font-weight:bold;"/>
+      <HBox spacing="8" alignment="CENTER_LEFT">
+       <Label text="Type:"/>
+       <ComboBox fx:id="typeFilterCombo" prefWidth="130"/>
+       <Label text="Venue:"/>
+       <TextField fx:id="venueFilterField" promptText="Venue name..." prefWidth="160"/>
+       <Label text="Author:"/>
+       <TextField fx:id="authorFilterField" promptText="Author name..." prefWidth="160"/>
+       <Button text="Filter" onAction="#handleFilter"/>
+      </HBox>
+     </VBox>
+    </top>
+    <center>
+     <TableView fx:id="yearPubTable">
+      <BorderPane.margin><Insets top="4" right="10" bottom="10" left="10"/></BorderPane.margin>
+      <placeholder><Label text="Select a year."/></placeholder>
+      <columns>
+       <TableColumn fx:id="yearPubTitleCol" text="Title"/>
+       <TableColumn fx:id="yearPubTypeCol" text="Type" maxWidth="110" minWidth="110"/>
+       <TableColumn fx:id="yearPubVenueCol" text="Venue"/>
+      </columns>
+     </TableView>
+    </center>
+   </BorderPane>
+  </SplitPane>
+ </center>
+
+</BorderPane>

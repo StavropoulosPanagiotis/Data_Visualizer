@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.chart.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<TabPane xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/26"
+ tabClosingPolicy="UNAVAILABLE"
+ fx:controller="gui.controller.ChartsController">
+
+ <Tab text="Publisher Stats">
+  <BorderPane>
+   <top>
+    <HBox spacing="8" alignment="CENTER_LEFT">
+     <padding><Insets top="10" right="10" bottom="10" left="10"/></padding>
+     <Button text="Load" onAction="#handleLoadPublisher"/>
+    </HBox>
+   </top>
+   <center>
+    <StackedBarChart fx:id="publisherChart" animated="false">
+     <BorderPane.margin><Insets top="0" right="10" bottom="10" left="10"/></BorderPane.margin>
+     <xAxis><CategoryAxis label="Publisher"/></xAxis>
+     <yAxis><NumberAxis label="Journal Count"/></yAxis>
+    </StackedBarChart>
+   </center>
+  </BorderPane>
+ </Tab>
+
+ <Tab text="Category Trends">
+  <BorderPane>
+   <top>
+    <HBox spacing="8" alignment="CENTER_LEFT">
+     <padding><Insets top="10" right="10" bottom="10" left="10"/></padding>
+     <Label text="Type:"/>
+     <ComboBox fx:id="catTypeCombo" prefWidth="120"/>
+     <Label text="Category:"/>
+     <TextField fx:id="catField" promptText="Subject area..." prefWidth="200"/>
+     <Button text="Load" onAction="#handleLoadCategory"/>
+    </HBox>
+   </top>
+   <center>
+    <LineChart fx:id="categoryChart" animated="false" title="Venues &amp; Publications per Year">
+     <BorderPane.margin><Insets top="0" right="10" bottom="10" left="10"/></BorderPane.margin>
+     <xAxis><CategoryAxis label="Year"/></xAxis>
+     <yAxis><NumberAxis label="Count"/></yAxis>
+    </LineChart>
+   </center>
+  </BorderPane>
+ </Tab>
+
+ <Tab text="Journal Scatter">
+  <BorderPane>
+   <top>
+    <HBox spacing="8" alignment="CENTER_LEFT">
+     <padding><Insets top="10" right="10" bottom="10" left="10"/></padding>
+     <Label text="Subject area:"/>
+     <TextField fx:id="scatterSubjectField" promptText="e.g. Computer Science" prefWidth="200"/>
+     <Label text="X Axis:"/>
+     <ComboBox fx:id="xAxisCombo" prefWidth="140"/>
+     <Label text="Y Axis:"/>
+     <ComboBox fx:id="yAxisCombo" prefWidth="140"/>
+     <Button text="Load" onAction="#handleLoadScatter"/>
+    </HBox>
+   </top>
+   <center>
+    <ScatterChart fx:id="scatterChart" animated="false">
+     <BorderPane.margin><Insets top="0" right="10" bottom="10" left="10"/></BorderPane.margin>
+     <xAxis><NumberAxis label="SJR Index"/></xAxis>
+     <yAxis><NumberAxis label="CiteScore"/></yAxis>
+    </ScatterChart>
+   </center>
+  </BorderPane>
+ </Tab>
+
+</TabPane>

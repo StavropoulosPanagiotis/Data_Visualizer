@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.chart.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/26"
+ fx:controller="gui.controller.VenueController">
+
+ <top>
+  <HBox spacing="8" alignment="CENTER_LEFT">
+   <padding><Insets top="10" right="10" bottom="10" left="10"/></padding>
+   <Label text="Name:"/>
+   <TextField fx:id="nameField" promptText="Venue name..." HBox.hgrow="ALWAYS"/>
+   <Label text="Type:"/>
+   <ComboBox fx:id="typeCombo"/>
+   <Label text="From:"/>
+   <Spinner fx:id="fromSpinner" prefWidth="85"/>
+   <Label text="To:"/>
+   <Spinner fx:id="toSpinner" prefWidth="85"/>
+   <Button text="Search" onAction="#handleSearch"/>
+  </HBox>
+ </top>
+
+ <center>
+  <SplitPane dividerPositions="0.38">
+   <BorderPane.margin><Insets top="0" right="10" bottom="10" left="10"/></BorderPane.margin>
+
+   <TableView fx:id="resultTable" minWidth="300">
+    <placeholder><Label text="No results."/></placeholder>
+    <columns>
+     <TableColumn fx:id="titleCol" text="Title"/>
+     <TableColumn fx:id="typeCol" text="Type" maxWidth="100" minWidth="100"/>
+     <TableColumn fx:id="rankCol" text="Rank" maxWidth="70" minWidth="70"/>
+     <TableColumn fx:id="countCol" text="Publications" maxWidth="110" minWidth="110"/>
+    </columns>
+   </TableView>
+
+   <TabPane minWidth="380" tabClosingPolicy="UNAVAILABLE">
+
+    <Tab text="Profile">
+     <BorderPane>
+      <top>
+       <VBox spacing="4">
+        <padding><Insets top="8" right="10" bottom="6" left="10"/></padding>
+        <Label text="Venue Profile" style="-fx-font-weight:bold; -fx-font-size:14;"/>
+        <GridPane hgap="12" vgap="3">
+         <Label text="First year:" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
+         <Label fx:id="statFirstYear" GridPane.columnIndex="1" GridPane.rowIndex="0"/>
+         <Label text="Last year:" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
+         <Label fx:id="statLastYear" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+         <Label text="Total publications:" GridPane.columnIndex="0" GridPane.rowIndex="2"/>
+         <Label fx:id="statTotal" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+         <Label text="Total authors:" GridPane.columnIndex="0" GridPane.rowIndex="3"/>
+         <Label fx:id="statTotalAuthors" GridPane.columnIndex="1" GridPane.rowIndex="3"/>
+         <Label text="Distinct authors:" GridPane.columnIndex="0" GridPane.rowIndex="4"/>
+         <Label fx:id="statDistinctAuthors" GridPane.columnIndex="1" GridPane.rowIndex="4"/>
+         <Label text="Avg authors/article:" GridPane.columnIndex="0" GridPane.rowIndex="5"/>
+         <Label fx:id="statAvgAuthors" GridPane.columnIndex="1" GridPane.rowIndex="5"/>
+         <Label text="Avg articles/year:" GridPane.columnIndex="0" GridPane.rowIndex="6"/>
+         <Label fx:id="statAvgArticles" GridPane.columnIndex="1" GridPane.rowIndex="6"/>
+        </GridPane>
+       </VBox>
+      </top>
+      <center>
+       <LineChart fx:id="lineChart" title="Publications per Year" animated="false">
+        <BorderPane.margin><Insets top="4" right="10" bottom="10" left="10"/></BorderPane.margin>
+        <xAxis><CategoryAxis label="Year"/></xAxis>
+        <yAxis><NumberAxis label="Publications"/></yAxis>
+       </LineChart>
+      </center>
+     </BorderPane>
+    </Tab>
+
+    <Tab text="Publications">
+     <TableView fx:id="pubTable">
+      <placeholder><Label text="Select a venue."/></placeholder>
+      <columns>
+       <TableColumn fx:id="pubTitleCol" text="Title"/>
+       <TableColumn fx:id="pubYearCol" text="Year" maxWidth="70" minWidth="70"/>
+       <TableColumn fx:id="pubAuthorCountCol" text="Authors" maxWidth="80" minWidth="80"/>
+      </columns>
+     </TableView>
+    </Tab>
+
+   </TabPane>
+  </SplitPane>
+ </center>
+
+</BorderPane>
