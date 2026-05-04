@@ -34,7 +34,10 @@ IGNORE 1 LINES
 (@from_file_rank, @from_file_title, @from_file_oa_status, @from_file_country, @from_file_sjr_index, @from_file_citescore,
  @from_file_h_index, @from_file_best_quartile, @from_file_best_categories, @from_file_best_subject_area,
  @from_file_best_subject_rank, @from_file_publisher, @from_file_core_collection, @from_file_coverage,
- @from_file_active, @from_file_in_press, @from_file_iso_language_code)
+ @from_file_active, @from_file_in_press, @from_file_iso_language_code,
+ @from_file_total_docs, @from_file_total_docs_3y, @from_file_total_refs,
+ @from_file_total_cites_3y, @from_file_citable_docs_3y, @from_file_cites_doc_2y, @from_file_refs_doc,
+ @from_file_asjc_codes)
 SET
     `rank`              = TRIM(@from_file_rank),
     `title`             = TRIM(@from_file_title),
@@ -43,6 +46,13 @@ SET
     `sjr_index`         = TRIM(@from_file_sjr_index),
     `citescore`         = TRIM(@from_file_citescore),
     `h_index`           = TRIM(@from_file_h_index),
+    `total_docs`        = TRIM(@from_file_total_docs),
+    `total_docs_3y`     = TRIM(@from_file_total_docs_3y),
+    `total_refs`        = TRIM(@from_file_total_refs),
+    `total_cites_3y`    = TRIM(@from_file_total_cites_3y),
+    `citable_docs_3y`   = TRIM(@from_file_citable_docs_3y),
+    `cites_doc_2y`  = TRIM(@from_file_cites_doc_2y),
+    `refs_doc`      = TRIM(@from_file_refs_doc),
     `best_quartile`     = TRIM(@from_file_best_quartile),
     `best_categories`   = TRIM(@from_file_best_categories),
     `best_subject_area` = TRIM(@from_file_best_subject_area),
@@ -85,6 +95,16 @@ ALTER TABLE `staging_publications`
 ALTER TABLE `staging_publications_authors`
     ADD INDEX `staging_publication_id_idx` (`publication_id`),
     ADD INDEX `staging_author_name_idx`    (`author_name`);
+
+-- ------------------------------------------------------------
+-- Normalize Journal Names in Staging
+-- ------------------------------------------------------------
+
+SET SQL_SAFE_UPDATES = 0;
+UPDATE `staging_publications`
+SET `journal` = normalize_journal(`journal`)
+WHERE `type` = 'journal';
+SET SQL_SAFE_UPDATES = 1;
 
 -- ------------------------------------------------------------
 -- Build Temp Lookup Tables
@@ -169,3 +189,12 @@ SET FOREIGN_KEY_CHECKS = 1;
 
 DROP TABLE IF EXISTS `staging_publications`;
 DROP TABLE IF EXISTS `staging_publications_authors`;
+
+-- ------------------------------------------------------------
+-- Build Fact Table Indexes
+-- ------------------------------------------------------------
+
+CREATE INDEX `idx_pub_year`  ON `publications`         (`year`);
+CREATE INDEX `idx_pub_jid`   ON `publications`         (`journal_id`);
+CREATE INDEX `idx_pub_cid`   ON `publications`         (`conference_id`);
+CREATE INDEX `idx_pa_author` ON `publications_authors` (`author_id`);
