@@ -8,6 +8,7 @@ import service.AuthorService;
 
 import java.util.List;
 
+/** ViewModel for the Author view. Holds observable state and runs service calls */
 public class AuthorViewModel {
 
 	private final ObservableList<AuthorResult> results = FXCollections.observableArrayList();

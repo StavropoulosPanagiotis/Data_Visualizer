@@ -5,6 +5,11 @@ import javafx.scene.Parent;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 
+/**
+ * Constructs the main application window containing
+ * the 4 primary views: Authors, Venues, Years, and Charts.
+ *
+ */
 public class MainWindow {
 
 	private final TabPane root;

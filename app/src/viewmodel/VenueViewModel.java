@@ -8,6 +8,7 @@ import service.VenueService;
 
 import java.util.List;
 
+/** ViewModel for the Venue view. Holds observable state and runs service calls */
 public class VenueViewModel {
 
 	private final ObservableList<VenueResult> results = FXCollections.observableArrayList();
@@ -17,8 +18,8 @@ public class VenueViewModel {
 
 	private final StringProperty searchName = new SimpleStringProperty("");
 	private String type = "";
-	private int fromYear = 2000;
-	private int toYear = 2024;
+	private int fromYear = 1900;
+	private int toYear = 2026;
 
 	private final BooleanProperty loading = new SimpleBooleanProperty(false);
 

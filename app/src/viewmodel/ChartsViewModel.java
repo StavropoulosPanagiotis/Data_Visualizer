@@ -8,6 +8,7 @@ import service.ChartService;
 
 import java.util.List;
 
+/** ViewModel for the Charts view. Holds observable state and runs service calls */
 public class ChartsViewModel {
 
 	private final ObservableList<PublisherStat> publisherStats = FXCollections.observableArrayList();

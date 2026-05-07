@@ -8,14 +8,15 @@ import service.YearService;
 
 import java.util.List;
 
+/** ViewModel for the Year view. Holds observable state and runs service calls */
 public class YearViewModel {
 
 	private final ObservableList<YearStat> results = FXCollections.observableArrayList();
 	private final ObservableList<YearPublication> publications = FXCollections.observableArrayList();
 	private final ObjectProperty<YearProfile> yearProfile = new SimpleObjectProperty<>();
 
-	private int fromYear = 2000;
-	private int toYear = 2024;
+	private int fromYear = 1900;
+	private int toYear = 2026;
 
 	private final BooleanProperty loading = new SimpleBooleanProperty(false);
 
