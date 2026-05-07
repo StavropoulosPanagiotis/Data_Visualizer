@@ -32,8 +32,7 @@ CREATE VIEW author_publications_view AS
 	JOIN publications_authors ON publications.publication_id = publications_authors.publication_id
 	JOIN authors ON publications_authors.author_id = authors.author_id
 	LEFT JOIN journals ON publications.journal_id = journals.journal_id
-	LEFT JOIN conferences ON publications.conference_id = conferences.conference_id
-	WHERE publications.year REGEXP '^[0-9]{4}$';
+	LEFT JOIN conferences ON publications.conference_id = conferences.conference_id;
 
 -- ------------------------------------------------------------
 -- venue_publications_view
@@ -49,7 +48,6 @@ CREATE VIEW venue_publications_view AS
 		publications.year
 	FROM publications
 	JOIN journals ON publications.journal_id = journals.journal_id
-	WHERE publications.year REGEXP '^[0-9]{4}$'
 UNION ALL
 	SELECT
 		'conference' AS venue_type,
@@ -60,8 +58,7 @@ UNION ALL
 		publications.title AS pub_title,
 		publications.year
 	FROM publications
-	JOIN conferences ON publications.conference_id = conferences.conference_id
-	WHERE publications.year REGEXP '^[0-9]{4}$';
+	JOIN conferences ON publications.conference_id = conferences.conference_id;
 
 -- ------------------------------------------------------------
 -- venue_author_publications_view
@@ -75,7 +72,7 @@ CREATE VIEW venue_author_publications_view AS
 		publications_authors.author_id
 	FROM publications
 	JOIN publications_authors ON publications.publication_id = publications_authors.publication_id
-	WHERE publications.journal_id IS NOT NULL AND publications.year REGEXP '^[0-9]{4}$'
+	WHERE publications.journal_id IS NOT NULL
 UNION ALL
 	SELECT
 		'conference' AS venue_type,
@@ -85,7 +82,7 @@ UNION ALL
 		publications_authors.author_id
 	FROM publications
 	JOIN publications_authors ON publications.publication_id = publications_authors.publication_id
-	WHERE publications.conference_id IS NOT NULL AND publications.year REGEXP '^[0-9]{4}$';
+	WHERE publications.conference_id IS NOT NULL;
 
 -- ------------------------------------------------------------
 -- valid_publications_view
@@ -93,19 +90,19 @@ UNION ALL
 CREATE VIEW valid_publications_view AS
 	SELECT publication_id, title, year, type, journal_id, conference_id
 	FROM publications
-	WHERE year REGEXP '^[0-9]{4}$';
+	WHERE year IS NOT NULL;
 
 -- ------------------------------------------------------------
 -- publisher_stats_view
 -- ------------------------------------------------------------
 CREATE VIEW publisher_stats_view AS
 	SELECT
-		 journals.publisher,
-		 COUNT(*) AS journal_count,
-		 SUM(journals.best_quartile = 'Q1') AS q1_count,
-		 SUM(journals.best_quartile = 'Q2') AS q2_count,
-		 SUM(journals.best_quartile = 'Q3') AS q3_count,
-		 SUM(journals.best_quartile = 'Q4') AS q4_count
+		journals.publisher,
+		COUNT(*) AS journal_count,
+		SUM(journals.best_quartile = 'Q1') AS q1_count,
+		SUM(journals.best_quartile = 'Q2') AS q2_count,
+		SUM(journals.best_quartile = 'Q3') AS q3_count,
+		SUM(journals.best_quartile = 'Q4') AS q4_count
 	FROM journals
 	WHERE journals.publisher IS NOT NULL AND journals.publisher != ''
 	GROUP BY journals.publisher;
@@ -161,7 +158,7 @@ CREATE VIEW journal_category_year_view AS
 		journals.best_subject_area AS category
 	FROM publications
 	JOIN journals ON publications.journal_id = journals.journal_id
-	WHERE publications.year REGEXP '^[0-9]{4}$';
+	WHERE publications.year IS NOT NULL;
 
 -- ------------------------------------------------------------
 -- conference_category_year_view
@@ -174,4 +171,4 @@ CREATE VIEW conference_category_year_view AS
 		conferences.primary_for AS category
 	FROM publications
 	JOIN conferences ON publications.conference_id = conferences.conference_id
-	WHERE publications.year REGEXP '^[0-9]{4}$';
+	WHERE publications.year IS NOT NULL;

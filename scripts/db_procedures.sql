@@ -35,7 +35,7 @@ CREATE PROCEDURE search_authors_procedure(
 BEGIN
 	SELECT author_id, author_name, COUNT(publication_id) AS publication_count
 	FROM author_publications_view
-	WHERE author_name LIKE CONCAT('%', param_name, '%') AND CAST(year AS UNSIGNED) BETWEEN param_from_year AND param_to_year
+	WHERE author_name LIKE CONCAT('%', param_name, '%') AND year BETWEEN param_from_year AND param_to_year
 	GROUP BY author_id, author_name
 	ORDER BY publication_count DESC
 	LIMIT param_limit;
@@ -56,7 +56,7 @@ BEGIN
 		SUM(type = 'journal') AS journal_count,
 		SUM(type = 'conference') AS conference_count
 	FROM author_publications_view
-	WHERE author_id = param_author_id AND CAST(year AS UNSIGNED) BETWEEN param_from_year AND param_to_year
+	WHERE author_id = param_author_id AND year BETWEEN param_from_year AND param_to_year
 	GROUP BY year
 	ORDER BY year;
 END$$
@@ -72,7 +72,7 @@ CREATE PROCEDURE author_publications_procedure(
 BEGIN
 	SELECT publication_id, title, year, type, venue
 	FROM author_publications_view
-	WHERE author_id = param_author_id AND CAST(year AS UNSIGNED) BETWEEN param_from_year AND param_to_year
+	WHERE author_id = param_author_id AND year BETWEEN param_from_year AND param_to_year
 	ORDER BY year DESC, title;
 END$$
 
@@ -85,14 +85,15 @@ CREATE PROCEDURE author_stats_procedure(
 BEGIN
 	SELECT
 		author_name,
-		MIN(CAST(year AS UNSIGNED)) AS first_year,
-		MAX(CAST(year AS UNSIGNED)) AS last_year,
+		MIN(year) AS first_year,
+		MAX(year) AS last_year,
 		COUNT(DISTINCT publication_id) AS total_publications,
 		SUM(type = 'journal') AS journal_count,
 		SUM(type = 'conference') AS conf_count,
 		ROUND(COUNT(DISTINCT publication_id) / COUNT(DISTINCT year), 2) AS avg_per_year
 	FROM author_publications_view
-	WHERE author_id = param_author_id;
+	WHERE author_id = param_author_id
+	GROUP BY author_id, author_name;
 END$$
 
 -- ------------------------------------------------------------
@@ -115,7 +116,7 @@ BEGIN
 	FROM venue_publications_view
 	WHERE venue_title LIKE CONCAT('%', param_name, '%')
 		AND (param_type = '' OR venue_type = param_type)
-		AND CAST(year AS UNSIGNED) BETWEEN param_from_year AND param_to_year
+		AND year BETWEEN param_from_year AND param_to_year
 	GROUP BY venue_id, venue_title, venue_type, `rank`
 	ORDER BY publication_count DESC
 	LIMIT param_limit;
@@ -135,7 +136,7 @@ BEGIN
 	FROM venue_publications_view
 	WHERE venue_id = param_venue_id
 	AND venue_type = param_type
-	AND CAST(year AS UNSIGNED) BETWEEN param_from_year AND param_to_year
+	AND year BETWEEN param_from_year AND param_to_year
 	GROUP BY year
 	ORDER BY year;
 END$$
@@ -151,15 +152,15 @@ CREATE PROCEDURE venue_stats_procedure(
 )
 BEGIN
 	SELECT
-		MIN(CAST(year AS UNSIGNED)) AS first_year,
-		MAX(CAST(year AS UNSIGNED)) AS last_year,
+		MIN(year) AS first_year,
+		MAX(year) AS last_year,
 		COUNT(DISTINCT publication_id) AS total_publications,
 		COUNT(author_id) AS total_authors,
 		COUNT(DISTINCT author_id) AS distinct_authors,
 		ROUND(COUNT(author_id) / COUNT(DISTINCT publication_id), 2) AS avg_authors_per_article,
 		ROUND(COUNT(DISTINCT publication_id) / COUNT(DISTINCT year), 2) AS avg_articles_per_year
 	FROM venue_author_publications_view
-	WHERE venue_id = param_venue_id AND venue_type = param_type AND CAST(year AS UNSIGNED) BETWEEN param_from_year AND param_to_year;
+	WHERE venue_id = param_venue_id AND venue_type = param_type AND year BETWEEN param_from_year AND param_to_year;
 END$$
 
 -- ------------------------------------------------------------
@@ -180,7 +181,7 @@ BEGIN
 	FROM venue_author_publications_view
 	WHERE venue_id = param_venue_id
 		AND venue_type = param_type
-		AND CAST(year AS UNSIGNED) BETWEEN param_from_year AND param_to_year
+		AND year BETWEEN param_from_year AND param_to_year
 	GROUP BY year
 	ORDER BY year;
 END$$
@@ -204,7 +205,7 @@ BEGIN
 	LEFT JOIN publications_authors ON venue_publications_view.publication_id = publications_authors.publication_id
 	WHERE venue_publications_view.venue_id = param_venue_id
 		AND venue_publications_view.venue_type = param_type
-		AND CAST(venue_publications_view.year AS UNSIGNED) BETWEEN param_from_year AND param_to_year
+		AND venue_publications_view.year BETWEEN param_from_year AND param_to_year
 	GROUP BY venue_publications_view.publication_id, venue_publications_view.pub_title, venue_publications_view.year
 	ORDER BY venue_publications_view.year DESC, venue_publications_view.pub_title;
 END$$
@@ -223,7 +224,7 @@ BEGIN
 		SUM(type = 'journal') AS journal_count,
 		SUM(type = 'conference') AS conference_count
 	FROM valid_publications_view
-	WHERE CAST(year AS UNSIGNED) BETWEEN param_from_year AND param_to_year
+	WHERE year BETWEEN param_from_year AND param_to_year
 	GROUP BY year
 	ORDER BY year;
 END$$
@@ -243,7 +244,7 @@ BEGIN
 		COUNT(DISTINCT publications_authors.author_id) AS distinct_authors
 	FROM valid_publications_view
 	LEFT JOIN publications_authors ON valid_publications_view.publication_id = publications_authors.publication_id
-	WHERE valid_publications_view.year = CAST(param_year AS CHAR);
+	WHERE valid_publications_view.year = param_year;
 END$$
 
 -- ------------------------------------------------------------
@@ -258,7 +259,7 @@ CREATE PROCEDURE year_publications_procedure(
 BEGIN
 	SELECT DISTINCT publication_id, title, type, venue
 	FROM year_publication_details_view
-	WHERE year = CAST(param_year AS CHAR)
+	WHERE year = param_year
 		AND (param_type_filter = '' OR type = param_type_filter)
 		AND (param_venue_name = '' OR journal_title LIKE CONCAT('%', param_venue_name, '%') 
         OR conference_title LIKE CONCAT('%', param_venue_name, '%'))
@@ -306,7 +307,7 @@ CREATE PROCEDURE journal_scatter_procedure(
 )
 BEGIN
 	SELECT title, quartile, subject_area, sjr_index, citescore, h_index,
-	       total_docs, total_docs_3y, total_refs, total_cites_3y, citable_docs_3y, cites_doc_2y, refs_doc
+		total_docs, total_docs_3y, total_refs, total_cites_3y, citable_docs_3y, cites_doc_2y, refs_doc
 	FROM journal_metrics_view
 	WHERE (param_subject_area = '' OR subject_area LIKE CONCAT('%', param_subject_area, '%'));
 END$$
