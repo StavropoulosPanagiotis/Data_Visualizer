@@ -12,6 +12,17 @@ import viewmodel.ChartsViewModel;
 
 import java.util.*;
 
+/**
+ * JavaFX controller for the Charts view
+ * <p>Manages 3 chart sections:
+ * <ul>
+ *   <li>A stacked bar chart of journal quartile counts per publisher</li>
+ *   <li>A line chart of venue and publication counts per year for a given category</li>
+ *   <li>A scatter chart comparing two user-selected journal metrics, grouped by quartile</li>
+ * </ul>
+ * <p> Communicates with {@link ChartsViewModel}
+ *
+ */
 public class ChartsController {
 
 	@FXML private StackedBarChart<String, Number> publisherChart;
@@ -97,8 +108,10 @@ public class ChartsController {
 
 	private void rebuildCategoryChart() {
 		categoryChart.getData().clear();
-		XYChart.Series<String, Number> venues = new XYChart.Series<>(); venues.setName("Venues");
-		XYChart.Series<String, Number> pubs = new XYChart.Series<>(); pubs.setName("Publications");
+		XYChart.Series<String, Number> venues = new XYChart.Series<>();
+		venues.setName("Venues");
+		XYChart.Series<String, Number> pubs = new XYChart.Series<>();
+		pubs.setName("Publications");
 		for (CategoryYearStat stat : viewModel.getCategoryStats()) {
 			venues.getData().add(new XYChart.Data<>(stat.getYear(), stat.getVenueCount()));
 			pubs.getData().add(new XYChart.Data<>(stat.getYear(), stat.getPubCount()));
@@ -121,8 +134,16 @@ public class ChartsController {
 		Map<String, XYChart.Series<Number, Number>> seriesMap = new LinkedHashMap<>();
 		for (JournalScatter journalScatter : viewModel.getScatterData()) {
 			double xValue, yValue;
-			try { xValue = metricValue(journalScatter, xMetric); } catch (Exception e) { continue; }
-			try { yValue = metricValue(journalScatter, yMetric); } catch (Exception e) { continue; }
+			try {
+				xValue = metricValue(journalScatter, xMetric);
+			} catch (Exception e) {
+				continue;
+			}
+			try {
+				yValue = metricValue(journalScatter, yMetric);
+			} catch (Exception e) {
+				continue;
+			}
 			String quartile = journalScatter.getQuartile() == null ? "?" : journalScatter.getQuartile();
 			seriesMap.computeIfAbsent(quartile, key -> {
 				XYChart.Series<Number, Number> series = new XYChart.Series<>();

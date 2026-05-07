@@ -11,6 +11,14 @@ import javafx.stage.Window;
 import model.*;
 import viewmodel.AuthorViewModel;
 
+/**
+ * JavaFX controller for the Author view
+ * <p>Responsible for searching authors by name and year range,
+ * displaying search results, and showing statistics and publication
+ * history for a selected author
+ * <p>Communicates with {@link AuthorViewModel}
+ *
+ */
 public class AuthorController {
 
 	@FXML private TextField nameField;
@@ -110,6 +118,11 @@ public class AuthorController {
 		lineChart.getData().addAll(journals, conf);
 	}
 
+	/**
+	 * Triggered by the search button, reads the spinner values,
+	 * updates the view model's year range and initializes author search
+	 *
+	 */
 	@FXML
 	private void handleSearch() {
 		viewModel.setFromYear(fromSpinner.getValue());

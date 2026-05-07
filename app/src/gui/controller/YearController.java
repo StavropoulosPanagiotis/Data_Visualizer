@@ -9,6 +9,14 @@ import javafx.stage.Window;
 import model.*;
 import viewmodel.YearViewModel;
 
+/**
+ * JavaFX controller for the Year view.
+ * <p> Responsible for showing publication statistics through
+ * a year range, displaying per-year totals in a table, and showing
+ * a filtered publication list and profile statistics for a selected year.
+ * <p> Communicates with {@link YearViewModel}
+ *
+ */
 public class YearController {
 
 	@FXML private Spinner<Integer> fromSpinner, toSpinner;
@@ -35,8 +43,8 @@ public class YearController {
 
 	@FXML
 	public void initialize() {
-		fromSpinner.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(1900, 2100, 2000));
-		toSpinner.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(1900, 2100, 2024));
+		fromSpinner.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(1900, 2026, 1900));
+		toSpinner.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(1900, 2026, 2026));
 
 		yearCol.setCellValueFactory(new PropertyValueFactory<>("year"));
 		totalCol.setCellValueFactory(new PropertyValueFactory<>("total"));

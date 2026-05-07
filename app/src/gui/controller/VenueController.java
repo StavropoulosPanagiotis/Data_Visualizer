@@ -11,6 +11,14 @@ import javafx.stage.Window;
 import model.*;
 import viewmodel.VenueViewModel;
 
+/**
+ * JavaFX controller for the Venue view
+ * <p> Responsible for searching venues by name, type, and year range,
+ * displaying search results, and showing statistics and publication
+ * history for a selected venue.
+ * <p>Communicates with {@link VenueViewModel}
+ *
+ */
 public class VenueController {
 
 	@FXML private TextField nameField;
@@ -36,8 +44,8 @@ public class VenueController {
 
 	@FXML
 	public void initialize() {
-		fromSpinner.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(1900, 2100, 2000));
-		toSpinner.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(1900, 2100, 2024));
+		fromSpinner.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(1900, 2026, 1900));
+		toSpinner.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(1900, 2026, 2026));
 
 		typeCombo.getItems().addAll("All", "Journal", "Conference");
 		typeCombo.setValue("All");
@@ -101,9 +109,13 @@ public class VenueController {
 	}
 
 	private void clearStats() {
-		statFirstYear.setText(""); statLastYear.setText(""); statTotal.setText("");
-		statTotalAuthors.setText(""); statDistinctAuthors.setText("");
-		statAvgAuthors.setText(""); statAvgArticles.setText("");
+		statFirstYear.setText("");
+		statLastYear.setText("");
+		statTotal.setText("");
+		statTotalAuthors.setText("");
+		statDistinctAuthors.setText("");
+		statAvgAuthors.setText("");
+		statAvgArticles.setText("");
 	}
 
 	private void rebuildLineChart() {
