@@ -1,5 +1,6 @@
 package model;
 
+/** Total statistics for a single venue across its active publication years */
 public class VenueStats {
 	private final int firstYear, lastYear, totalPublications, totalAuthors, distinctAuthors;
 	private final double avgAuthorsPerArticle, avgArticlesPerYear;

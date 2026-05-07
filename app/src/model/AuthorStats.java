@@ -1,5 +1,6 @@
 package model;
 
+/** Aggregated career statistics for a single author */
 public class AuthorStats {
 	private final String authorName;
 	private final int firstYear, lastYear, totalPublications, journalCount, confCount;

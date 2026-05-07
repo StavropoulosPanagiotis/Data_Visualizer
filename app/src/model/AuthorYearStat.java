@@ -1,5 +1,6 @@
 package model;
 
+/** Publication breakdown (total, journals, conferences) for an author in a single year */
 public class AuthorYearStat {
 	private final String year;
 	private final int pubCount;

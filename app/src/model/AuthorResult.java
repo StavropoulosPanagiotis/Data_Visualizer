@@ -1,5 +1,6 @@
 package model;
 
+/** A search result row representing an author and their total publication count */
 public class AuthorResult {
 	private final int authorId;
 	private final String authorName;

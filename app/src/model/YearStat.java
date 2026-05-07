@@ -1,5 +1,6 @@
 package model;
 
+/** Per-year publication totals broken down by journals and conferences */
 public class YearStat {
 	private final String year;
 	private final int total;

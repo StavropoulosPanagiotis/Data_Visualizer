@@ -1,5 +1,6 @@
 package model;
 
+/** Journal counts broken down by quartile (Q1–Q4) for a single publisher */
 public class PublisherStat {
 	private final String publisher;
 	private final int journalCount, q1Count, q2Count, q3Count, q4Count;

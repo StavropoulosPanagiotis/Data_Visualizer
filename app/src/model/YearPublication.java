@@ -1,5 +1,6 @@
 package model;
 
+/** A single publication entry in a year's publication list */
 public class YearPublication {
 	private final int publicationId;
 	private final String title, type, venue;

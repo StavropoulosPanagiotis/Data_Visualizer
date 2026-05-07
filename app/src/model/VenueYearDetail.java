@@ -1,5 +1,6 @@
 package model;
 
+/** Publication and author counts for a venue in a single year */
 public class VenueYearDetail {
 	private final String year;
 	private final int pubCount, totalAuthors, distinctAuthors;

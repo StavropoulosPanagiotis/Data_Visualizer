@@ -1,5 +1,6 @@
 package model;
 
+/** Total publication and author statistics for a single year */
 public class YearProfile {
 	private final int totalPublications, distinctJournals, distinctConferences, totalAuthors, distinctAuthors;
 

@@ -1,5 +1,6 @@
 package model;
 
+/** A search result row representing a venue with its type, rank, and publication count */
 public class VenueResult {
 	private final int venueId;
 	private final String title;

@@ -1,5 +1,6 @@
 package model;
 
+/** Detailed data for a single journal, used in the scatter chart */
 public class JournalScatter {
 	private final String title, quartile, subjectArea, sjrIndex, citescore, hIndex;
 	private final String totalDocs, totalDocs3y, totalRefs, totalCites3y, citableDocs3y, citesDoc2y, refsDoc;
