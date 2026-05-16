@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<ScrollPane fitToWidth="true" hbarPolicy="NEVER"
+ xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/26"
+>
+
+ <VBox spacing="30">
+  <padding><Insets top="50" right="80" bottom="50" left="80"/></padding>
+
+  <VBox alignment="CENTER" spacing="6">
+   <Label text="Data Visualizer" style="-fx-font-size:30; -fx-font-weight:bold; -fx-text-fill:#7c6af7;"/>
+  </VBox>
+
+  <Separator/>
+
+  <HBox spacing="16">
+   <VBox styleClass="home-card" HBox.hgrow="ALWAYS" spacing="8">
+    <Label text="Authors" style="-fx-font-size:16; -fx-font-weight:bold;"/>
+    <Label wrapText="true" style="-fx-font-size:13; -fx-text-fill:#555555;" text="Search for authors by name and year range. Select an author to see their career statistics, a yearly breakdown of journal and conference publications, and their full publication list."/>
+   </VBox>
+   <VBox styleClass="home-card" HBox.hgrow="ALWAYS" spacing="8">
+    <Label text="Venues" style="-fx-font-size:16; -fx-font-weight:bold;"/>
+    <Label wrapText="true" style="-fx-font-size:13; -fx-text-fill:#555555;" text="Search for journals and conferences by name and type. Select a venue to view its publication count per year, author statistics, and a detailed list of all its publications."/>
+   </VBox>
+  </HBox>
+
+  <HBox spacing="16">
+   <VBox styleClass="home-card" HBox.hgrow="ALWAYS" spacing="8">
+    <Label text="Years" style="-fx-font-size:16; -fx-font-weight:bold;"/>
+    <Label wrapText="true" style="-fx-font-size:13; -fx-text-fill:#555555;" text="Browse overall publication counts across a year range. Select a year to see a profile with distinct journals, conferences, and authors, and filter its publications by type, venue, or author name."/>
+   </VBox>
+   <VBox styleClass="home-card" HBox.hgrow="ALWAYS" spacing="8">
+    <Label text="Charts" style="-fx-font-size:16; -fx-font-weight:bold;"/>
+    <Label wrapText="true" style="-fx-font-size:13; -fx-text-fill:#555555;" text="Explore three visualisations: a stacked bar chart of publisher journal counts by quartile, a line chart of publication trends by category, and a scatter chart comparing journal bibliometric metrics."/>
+   </VBox>
+  </HBox>
+
+ </VBox>
+</ScrollPane>
