@@ -17,11 +17,13 @@
     </HBox>
    </top>
    <center>
-    <StackedBarChart fx:id="publisherChart" animated="false">
+    <ScrollPane fitToHeight="true" hbarPolicy="AS_NEEDED" vbarPolicy="NEVER">
      <BorderPane.margin><Insets top="0" right="10" bottom="10" left="10"/></BorderPane.margin>
-     <xAxis><CategoryAxis label="Publisher"/></xAxis>
-     <yAxis><NumberAxis label="Journal Count"/></yAxis>
-    </StackedBarChart>
+     <StackedBarChart fx:id="publisherChart" animated="false">
+      <xAxis><CategoryAxis label="Publisher"/></xAxis>
+      <yAxis><NumberAxis label="Journal Count"/></yAxis>
+     </StackedBarChart>
+    </ScrollPane>
    </center>
   </BorderPane>
  </Tab>
