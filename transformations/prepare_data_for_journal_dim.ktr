@@ -11,12 +11,12 @@
     <parameters>
       <parameter>
         <name>CLEANED_DATA_PATH</name>
-        <default_value>${Internal.Entry.Current.Directory}/../cleaned_data/</default_value>
+        <default_value>${Internal.Entry.Current.Directory}/../app/data/cleaned_data/</default_value>
         <description/>
       </parameter>
       <parameter>
         <name>RAW_DATA_PATH</name>
-        <default_value>${Internal.Entry.Current.Directory}/../raw_data/</default_value>
+        <default_value>${Internal.Entry.Current.Directory}/../app/data/raw_data/</default_value>
         <description/>
       </parameter>
     </parameters>
