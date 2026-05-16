@@ -56,17 +56,6 @@ LINES TERMINATED BY '\n'
 IGNORE 1 LINES
 (`publication_id`, `author_name`);
 
--- ------------------------------------------------------------
--- Build Staging Indexes
--- ------------------------------------------------------------
-
-ALTER TABLE `staging_publications`
-    ADD INDEX `staging_journal_idx` (`journal`),
-    ADD INDEX `staging_booktitle_idx` (`booktitle`);
-
-ALTER TABLE `staging_publications_authors`
-    ADD INDEX `staging_publication_id_idx` (`publication_id`),
-    ADD INDEX `staging_author_name_idx` (`author_name`);
 
 -- ------------------------------------------------------------
 -- Normalize Journal Names in Staging
@@ -77,6 +66,20 @@ UPDATE `staging_publications`
 SET `journal` = normalize_journal(`journal`)
 WHERE `type` = 'journal';
 SET SQL_SAFE_UPDATES = 1;
+
+
+-- ------------------------------------------------------------
+-- Build Staging Indexes
+-- ------------------------------------------------------------
+
+ALTER TABLE `staging_publications_authors`
+    ADD INDEX `staging_publication_id_idx` (`publication_id`),
+    ADD INDEX `staging_author_name_idx` (`author_name`);
+
+ALTER TABLE `staging_publications`
+    ADD INDEX `staging_journal_idx` (`journal`),
+    ADD INDEX `staging_booktitle_idx` (`booktitle`);
+
 
 -- ------------------------------------------------------------
 -- Insert into publications
@@ -119,6 +122,7 @@ LEFT JOIN conference_title_lookup
 LEFT JOIN conference_acronym_lookup
     ON `staging_publications`.`booktitle` = conference_acronym_lookup.`acronym` AND `staging_publications`.`type` = 'conference';
 
+
 -- ------------------------------------------------------------
 -- Insert into publications_authors
 -- ------------------------------------------------------------
@@ -136,12 +140,14 @@ JOIN `authors`
 SET UNIQUE_CHECKS = 1;
 SET FOREIGN_KEY_CHECKS = 1;
 
+
 -- ------------------------------------------------------------
 -- Drop Staging Tables
 -- ------------------------------------------------------------
 
 DROP TABLE IF EXISTS `staging_publications`;
 DROP TABLE IF EXISTS `staging_publications_authors`;
+
 
 -- ------------------------------------------------------------
 -- Build Fact Table Indexes
