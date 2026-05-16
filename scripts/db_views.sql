@@ -1,5 +1,4 @@
 -- ============================================================
--- The views for our project
 -- The according procedures will query these views
 -- RUN BEFORE db_procedures.sql
 -- ============================================================
@@ -115,8 +114,8 @@ CREATE VIEW journal_metrics_view AS
 		journals.title,
 		journals.best_quartile AS quartile,
 		journals.best_subject_area AS subject_area,
-		NULLIF(journals.sjr_index, '') AS sjr_index,
-		NULLIF(journals.citescore, '') AS citescore,
+		journals.sjr_index,
+		journals.citescore,
 		NULLIF(journals.h_index, '') AS h_index,
 		NULLIF(journals.total_docs, '') AS total_docs,
 		NULLIF(journals.total_docs_3y, '') AS total_docs_3y,
