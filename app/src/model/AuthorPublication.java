@@ -1,7 +1,6 @@
 package model;
 
-/**
- * A single publication entry in an author's publication list */
+/** A single publication entry in an author's publication list */
 public class AuthorPublication {
 	private final int publicationId;
 	private final String title;
