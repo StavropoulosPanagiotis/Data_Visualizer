@@ -22,7 +22,8 @@ public class ChartsViewModel {
 	public void loadPublisherStats() {
 		loading.set(true);
 		Task<List<PublisherStat>> task = new Task<>() {
-			@Override protected List<PublisherStat> call() throws Exception {
+			@Override
+			protected List<PublisherStat> call() throws Exception {
 				return service.getPublisherStats();
 			}
 		};
