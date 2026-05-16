@@ -22,14 +22,13 @@ public class VenueRepository {
 	 * @param limit maximum number of results to return
 	 * @return list of matching venues with type, rank, and publication count
 	 */
-	public List<VenueResult> searchVenues(String name, String type, int fromYear, int toYear, int limit) throws SQLException {
+	public List<VenueResult> searchVenues(String name, String type, int fromYear, int toYear) throws SQLException {
 		List<VenueResult> results = new ArrayList<>();
-		try (CallableStatement callableStatement = DBConnection.get().prepareCall("{CALL search_venues_procedure(?,?,?,?,?)}")) {
+		try (CallableStatement callableStatement = DBConnection.get().prepareCall("{CALL search_venues_procedure(?,?,?,?)}")) {
 			callableStatement.setString(1, name);
 			callableStatement.setString(2, type);
 			callableStatement.setInt(3, fromYear);
 			callableStatement.setInt(4, toYear);
-			callableStatement.setInt(5, limit);
 			ResultSet resultSet = callableStatement.executeQuery();
 			while (resultSet.next()) {
 				results.add(new VenueResult(resultSet.getInt("venue_id"),
@@ -67,13 +66,13 @@ public class VenueRepository {
 	}
 
 	/**
-	 * Returns per-year publication counts for a venue within a year range
+	 * Returns total statistics for a venue within a year range
 	 *
 	 * @param venueId the venue's DB id
 	 * @param type venue type
 	 * @param fromYear start of the year range
 	 * @param toYear end of the year range
-	 * @return list of yearly publication counts
+	 * @return the venue's stats, or {@code null} if not found
 	 */
 	public VenueStats getVenueStats(int venueId, String type, int fromYear, int toYear) throws SQLException {
 		try (CallableStatement callableStatement = DBConnection.get().prepareCall("{CALL venue_stats_procedure(?,?,?,?)}")) {

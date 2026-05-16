@@ -22,13 +22,12 @@ public class AuthorRepository {
 	 * @return list of matching authors with their publication counts
 	 * @throws SQLException
 	 */
-	public List<AuthorResult> searchAuthors(String name, int fromYear, int toYear, int limit) throws SQLException {
+	public List<AuthorResult> searchAuthors(String name, int fromYear, int toYear) throws SQLException {
 		List<AuthorResult> results = new ArrayList<>();
-		try (CallableStatement callableStatement = DBConnection.get().prepareCall("{CALL search_authors_procedure(?,?,?,?)}")) {
+		try (CallableStatement callableStatement = DBConnection.get().prepareCall("{CALL search_authors_procedure(?,?,?)}")) {
 			callableStatement.setString(1, name);
 			callableStatement.setInt(2, fromYear);
 			callableStatement.setInt(3, toYear);
-			callableStatement.setInt(4, limit);
 			ResultSet resultSet = callableStatement.executeQuery();
 			while (resultSet.next()) {
 				results.add(new AuthorResult(resultSet.getInt("author_id"),
