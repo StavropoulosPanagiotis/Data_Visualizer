@@ -1,14 +1,15 @@
 USE `data_visualizer`;
 
 -- ----------------------------------------------------------
--- This script is used to handle abbreviations like J. or Int. on journals
--- The ultimate reason to do this is to match the FK's of publications to journals
--- Now we create a function that normalizes journal names
--- We took care of the abbreviations with more than 1000 rows affected
+-- This function is used to handle abbreviations like J. or Int. on journals
 -- ----------------------------------------------------------
 
+SET GLOBAL log_bin_trust_function_creators = 1;
+
 DROP FUNCTION IF EXISTS normalize_journal;
+
 DELIMITER $
+
 CREATE FUNCTION normalize_journal(journal_name TEXT)
 RETURNS TEXT
 DETERMINISTIC
@@ -50,11 +51,4 @@ BEGIN
 END$
 DELIMITER ;
 
--- ----------------------------------------------------------
--- NORMALIZE STAGING DATA IN PLACE
--- ----------------------------------------------------------
-SET SQL_SAFE_UPDATES = 0;
-UPDATE `staging_publications`
-SET `journal` = normalize_journal(`journal`)
-WHERE `type` = 'journal';
-SET SQL_SAFE_UPDATES = 1;
+SET GLOBAL log_bin_trust_function_creators = 0;
