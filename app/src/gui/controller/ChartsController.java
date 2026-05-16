@@ -90,7 +90,8 @@ public class ChartsController {
 		XYChart.Series<String, Number> q2 = new XYChart.Series<>(); q2.setName("Q2");
 		XYChart.Series<String, Number> q3 = new XYChart.Series<>(); q3.setName("Q3");
 		XYChart.Series<String, Number> q4 = new XYChart.Series<>(); q4.setName("Q4");
-		for (PublisherStat stat : viewModel.getPublisherStats()) {
+		List<PublisherStat> stats = viewModel.getPublisherStats();
+		for (PublisherStat stat : stats) {
 			String pub = stat.getPublisher() == null ? "(none)" : stat.getPublisher();
 			q1.getData().add(new XYChart.Data<>(pub, stat.getQ1Count()));
 			q2.getData().add(new XYChart.Data<>(pub, stat.getQ2Count()));
@@ -98,6 +99,7 @@ public class ChartsController {
 			q4.getData().add(new XYChart.Data<>(pub, stat.getQ4Count()));
 		}
 		publisherChart.getData().addAll(q1, q2, q3, q4);
+		publisherChart.setPrefWidth(Math.max(800, stats.size() * 50));
 	}
 
 	@FXML
