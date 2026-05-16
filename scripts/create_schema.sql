@@ -14,8 +14,8 @@ CREATE TABLE `authors` (
     `author_id` INT NOT NULL AUTO_INCREMENT,
     `author_name` VARCHAR(300) NOT NULL,
     PRIMARY KEY (`author_id`),
-    INDEX `index_author_name` (`author_name`)
-);
+    INDEX `idx_author_name` (`author_name`)
+) ENGINE = InnoDB;
 
 -- ------------------------------------------------------------
 -- Table `journals`
@@ -47,8 +47,8 @@ CREATE TABLE `journals` (
     `in_press` VARCHAR(100) NULL,
     `iso_language_code` VARCHAR(100) NULL,
     PRIMARY KEY (`journal_id`),
-    INDEX `index_journal_title` (`title`(500))
-);
+    INDEX `idx_journal_title` (`title`(500))
+) ENGINE = InnoDB;
 
 -- ------------------------------------------------------------
 -- Table `conferences`
@@ -60,9 +60,9 @@ CREATE TABLE `conferences` (
     `rank` VARCHAR(100) NULL,
     `primary_for` VARCHAR(100) NULL,
     PRIMARY KEY (`conference_id`),
-    INDEX `index_conference_title` (`title`(500)),
-    INDEX `index_conference_acronym` (`acronym`)
-);
+    INDEX `idx_conference_title` (`title`(500)),
+    INDEX `idx_conference_acronym` (`acronym`)
+) ENGINE = InnoDB;
 
 -- ------------------------------------------------------------
 -- Table `publications`
@@ -79,7 +79,7 @@ CREATE TABLE `publications` (
     PRIMARY KEY (`publication_id`),
     CONSTRAINT `journal_fk` FOREIGN KEY (`journal_id`) REFERENCES `journals`(`journal_id`),
     CONSTRAINT `conference_fk` FOREIGN KEY (`conference_id`) REFERENCES `conferences`(`conference_id`)
-);
+) ENGINE = InnoDB;
 
 -- ------------------------------------------------------------
 -- Table `publications_authors`
@@ -90,7 +90,7 @@ CREATE TABLE `publications_authors` (
     PRIMARY KEY (`publication_id`, `author_id`),
     CONSTRAINT `publication_fk` FOREIGN KEY (`publication_id`) REFERENCES `publications`(`publication_id`),
     CONSTRAINT `author_fk` FOREIGN KEY (`author_id`) REFERENCES `authors`(`author_id`)
-);
+) ENGINE = InnoDB;
 
 -- ------------------------------------------------------------
 -- Staging Table: `staging_publications`
@@ -104,7 +104,7 @@ CREATE TABLE IF NOT EXISTS `staging_publications` (
     `journal` VARCHAR(500),
     `booktitle` VARCHAR(500),
     `type` TEXT
-);
+) ENGINE = InnoDB;
 
 -- ------------------------------------------------------------
 -- Staging Table: `staging_publications_authors`
@@ -112,6 +112,6 @@ CREATE TABLE IF NOT EXISTS `staging_publications` (
 CREATE TABLE IF NOT EXISTS `staging_publications_authors` (
     `publication_id` INT,
     `author_name` VARCHAR(300)
-);
+) ENGINE = InnoDB;
 
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
