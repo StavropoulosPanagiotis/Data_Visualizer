@@ -1,14 +1,20 @@
-.loading-box {
-	-fx-background-color: white;
-	-fx-padding: 20;
-	-fx-border-color: lightgray;
-	-fx-border-radius: 6;
-	-fx-background-radius: 6;
-	-fx-spacing: 10;
-	-fx-alignment: center;
+.button {
+    -fx-background-color: #7c6af7;
+    -fx-text-fill: white;
 }
 
-.loading-indicator {
-	-fx-pref-width: 40;
-	-fx-pref-height: 40;
+.button:hover {
+    -fx-background-color: #6a58e0;
+}
+
+.home-card {
+    -fx-background-color: #f5f5f5;
+    -fx-border-color: #cccccc;
+    -fx-border-radius: 6;
+    -fx-background-radius: 6;
+    -fx-padding: 16;
+}
+
+.loading-box {
+    -fx-padding: 20;
 }
