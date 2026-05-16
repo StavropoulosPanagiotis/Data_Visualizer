@@ -1,5 +1,4 @@
 -- ============================================================
--- The procedures for our project
 -- RUN AFTER db_views.sql
 -- ============================================================
 
@@ -29,16 +28,14 @@ DELIMITER $$
 CREATE PROCEDURE search_authors_procedure(
 	IN param_name VARCHAR(300),
 	IN param_from_year INT,
-	IN param_to_year INT,
-	IN param_limit INT
+	IN param_to_year INT
 )
 BEGIN
 	SELECT author_id, author_name, COUNT(publication_id) AS publication_count
 	FROM author_publications_view
 	WHERE author_name LIKE CONCAT('%', param_name, '%') AND year BETWEEN param_from_year AND param_to_year
 	GROUP BY author_id, author_name
-	ORDER BY publication_count DESC
-	LIMIT param_limit;
+	ORDER BY publication_count DESC;
 END$$
 
 -- ------------------------------------------------------------
@@ -103,8 +100,7 @@ CREATE PROCEDURE search_venues_procedure(
 	IN param_name VARCHAR(500),
 	IN param_type VARCHAR(20),
 	IN param_from_year INT,
-	IN param_to_year INT,
-	IN param_limit INT
+	IN param_to_year INT
 )
 BEGIN
 	SELECT
@@ -118,8 +114,7 @@ BEGIN
 		AND (param_type = '' OR venue_type = param_type)
 		AND year BETWEEN param_from_year AND param_to_year
 	GROUP BY venue_id, venue_title, venue_type, `rank`
-	ORDER BY publication_count DESC
-	LIMIT param_limit;
+	ORDER BY publication_count DESC;
 END$$
 
 -- ------------------------------------------------------------
@@ -274,8 +269,7 @@ CREATE PROCEDURE publisher_stats_procedure()
 BEGIN
 	SELECT publisher, journal_count, q1_count, q2_count, q3_count, q4_count
 	FROM publisher_stats_view
-	ORDER BY journal_count DESC
-	LIMIT 20;
+	ORDER BY journal_count DESC;
 END$$
 
 -- ------------------------------------------------------------
