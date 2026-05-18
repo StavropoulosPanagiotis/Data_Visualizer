@@ -4,13 +4,13 @@
 
 A desktop app for exploring academic publication data from DBLP. We clean and load the data into MySQL using Pentaho, then browse it through a JavaFX interface with search, filters, stats, and charts.
 
-## Technology Stack
+## Technologies used
 
 | Layer | Technology |
 |-------|------------|
 | ETL | Pentaho Data Integration (Spoon) |
 | Database | MySQL 8.0 — schema `data_visualizer` |
-| Application | Java + JavaFX 26 |
+| App | Java + JavaFX 26 |
 | JDBC Driver | MySQL Connector/J 9.7.0 |
 | IDE | IntelliJ IDEA |
 
@@ -21,7 +21,7 @@ Data_Visualizer/
 ├── app/                        Java + JavaFX application (IntelliJ project)
 │   └── src/
 │       ├── application/        Main.java — JavaFX entry point
-│       ├── db/                 DBConnection.java — singleton JDBC connection
+│       ├── db/                 DBConnection.java — JDBC connection
 │       ├── model/              15 model classes (one per query result shape)
 │       ├── repository/         4 repository classes (CallableStatement wrappers)
 │       ├── service/            4 service classes (business logic)
@@ -38,7 +38,7 @@ Data_Visualizer/
 │   ├── db_views.sql
 │   └── db_procedures.sql
 ├── transformations/            Pentaho .ktr / .kjb transformation files
-│   ├── prepare_and_clean_data.kjb          (master job)
+│   ├── prepare_and_clean_data.kjb          (main job, calls all transforms)
 │   ├── prepare_data_for_author_dim.ktr
 │   ├── prepare_data_for_journal_dim.ktr
 │   ├── prepare_data_for_conference_dim.ktr
@@ -167,7 +167,7 @@ The script temporarily sets `log_bin_trust_function_creators = 1` (allowed by th
 
 ---
 
-### Step 6 — Increase InnoDB buffer pool size
+### Step 6 — Increase InnoDB buffer pool size !!!ONLY IF YOUR MACHINE CAN SUPPORT IT
 
 Before loading, increase MySQL's InnoDB buffer pool to 8 GB to reduce disk I/O during the bulk insert. Without this, MySQL would frequently flush dirty pages to disk while inserting the 7M+ row `publications_authors` table, making the load significantly slower.
 
