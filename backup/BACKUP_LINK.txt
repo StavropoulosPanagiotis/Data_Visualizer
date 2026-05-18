@@ -1,0 +1,2 @@
+Full database backup (schema + data + procedures) is available on Google Drive:
+https://drive.google.com/file/d/1EGJHzhVsR38uhY-eCL54SuKuIHcgDKTt/view?usp=drive_link
