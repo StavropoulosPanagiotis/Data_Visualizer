@@ -167,7 +167,21 @@ The script temporarily sets `log_bin_trust_function_creators = 1` (allowed by th
 
 ---
 
-### Step 6 — Load data
+### Step 6 — Increase InnoDB buffer pool size
+
+Before loading, increase MySQL's InnoDB buffer pool to 8 GB to reduce disk I/O during the bulk insert. Without this, MySQL would frequently flush dirty pages to disk while inserting the 7M+ row `publications_authors` table, making the load significantly slower.
+
+Run the following as `DataVisualizerUser`:
+
+```sql
+SET GLOBAL innodb_buffer_pool_size = 8589934592;
+```
+
+> This change is temporary and resets when MySQL restarts. It only needs to be active during the load.
+
+---
+
+### Step 7 — Load data
 
 **Connection:** DataVisualizerConnection
 **Script:** `scripts/load_data.sql`
@@ -193,7 +207,7 @@ This script:
 
 ---
 
-### Step 7 — Create views
+### Step 8 — Create views
 
 **Connection:** DataVisualizerConnection 
 **Script:** `scripts/db_views.sql`
@@ -212,11 +226,11 @@ Creates 9 views to simplify procedure queries:
 | `journal_category_year_view` | Publications per journal per year with subject area |
 | `conference_category_year_view` | Publications per conference per year with primary field |
 
-> Run this script before `db_procedures.sql` — procedures depend on these views.
+> Run this script before Step 9 — procedures depend on these views.
 
 ---
 
-### Step 8 — Create stored procedures
+### Step 9 — Create stored procedures
 
 **Connection:** DataVisualizerConnection  
 **Script:** `scripts/db_procedures.sql`
