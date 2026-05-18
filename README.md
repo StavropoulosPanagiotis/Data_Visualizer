@@ -60,12 +60,12 @@ Data_Visualizer/
 
 ## Database Setup
 
-Follow these steps **in order** on a clean MySQL 8.0 installation. All scripts are in the `scripts/` folder.
+Follow these steps in order to setup the DB correctly. All scripts are in the `scripts/` folder.
 
 ### Prerequisites
 
 - MySQL 8.0 installed and running
-- MySQL Workbench (or any MySQL client)
+- MySQL Workbench
 - The 5 cleaned CSV files from the `data/` folder
 
 ---
@@ -94,13 +94,13 @@ FLUSH PRIVILEGES;
 
 In MySQL Workbench, create a new connection:
 
-| Field | Value |
-|-------|-------|
-| Connection Name | DataVisualizerUser (or any name) |
-| Hostname | 127.0.0.1 |
-| Port | 3306 |
-| Username | DataVisualizerUser |
-| Password | DataVisualizer |
+| Field | Value                                  |
+|-------|----------------------------------------|
+| Connection Name | DataVisualizerConnection (or any name) |
+| Hostname | 127.0.0.1                              |
+| Port | 3306                                   |
+| Username | DataVisualizerUser                     |
+| Password | DataVisualizer                         |
 
 All remaining steps run under this connection.
 
@@ -108,20 +108,20 @@ All remaining steps run under this connection.
 
 ### Step 3 — Create the schema and tables
 
-**Connection:** DataVisualizerUser  
+**Connection:** DataVisualizerConnection
 **Script:** `scripts/create_schema.sql`
 
 Creates the `data_visualizer` database and all tables:
 
-| Table | Description |
-|-------|-------------|
-| `authors` | Author dimension — `author_id`, `author_name` |
-| `journals` | Journal dimension — 25 columns including bibliometric fields (SJR, CiteScore, h-index, quartile, etc.) |
-| `conferences` | Conference dimension — `conference_id`, `title`, `acronym`, `rank`, `primary_for` |
+| Table | Description                                                                                                 |
+|-------|-------------------------------------------------------------------------------------------------------------|
+| `authors` | Author dimension — `author_id`, `author_name`                                                               |
+| `journals` | Journal dimension — 25 columns including fields like (SJR, CiteScore, h-index, quartile, etc.)              |
+| `conferences` | Conference dimension — `conference_id`, `title`, `acronym`, `rank`, `primary_for`                           |
 | `publications` | Fact table — `publication_id`, `title`, `year`, `type` (journal/conference), FK to journals and conferences |
-| `publications_authors` | N:M link table — `publication_id` + `author_id` |
-| `staging_publications` | Temporary staging table used during loading only |
-| `staging_publications_authors` | Temporary staging table used during loading only |
+| `publications_authors` | N:M bridge table — `publication_id`, `author_id`                                                            |
+| `staging_publications` | Temporary staging table used during loading only                                                            |
+| `staging_publications_authors` | Temporary staging table used during loading only                                                            |
 
 Indexes created at this stage (dimension tables):
 
@@ -134,9 +134,9 @@ Indexes created at this stage (dimension tables):
 
 ---
 
-### Step 4 — Copy CSV files to the MySQL upload directory
+### Step 4 — Copy cleaned CSV files to the MySQL upload directory
 
-Before running the load script, copy all 5 CSV files from the `data/` folder to:
+Before running the load script, copy all 5 CSV files from the `data/cleaned_data/` folder to:
 
 ```
 C:\ProgramData\MySQL\MySQL Server 8.0\Uploads\
@@ -158,7 +158,7 @@ The exact files expected:
 
 ### Step 5 — Define the journal normalization function
 
-**Connection:** DataVisualizerUser  
+**Connection:** DataVisualizerConnection
 **Script:** `scripts/handle_journal_abbreviations.sql`
 
 Creates the `normalize_journal()` function that expands common abbreviations in journal titles (e.g. `J.` → `Journal of`, `Trans.` → `Transactions on`). This is needed so that abbreviated journal names from DBLP can be matched against the full names in the journal dimension.
@@ -169,10 +169,10 @@ The script temporarily sets `log_bin_trust_function_creators = 1` (allowed by th
 
 ### Step 6 — Load data
 
-**Connection:** DataVisualizerUser  
+**Connection:** DataVisualizerConnection
 **Script:** `scripts/load_data.sql`
 
-This is the most time-consuming script. It:
+This script:
 
 1. Bulk-loads all 5 CSVs into the dimension and staging tables via `LOAD DATA INFILE`
 2. Runs `normalize_journal()` on all journal names in staging to expand abbreviations
@@ -195,19 +195,19 @@ This is the most time-consuming script. It:
 
 ### Step 7 — Create views
 
-**Connection:** DataVisualizerUser  
+**Connection:** DataVisualizerConnection 
 **Script:** `scripts/db_views.sql`
 
-Creates 9 views that pre-join tables to simplify procedure queries:
+Creates 9 views to simplify procedure queries:
 
 | View | Purpose |
 |------|---------|
-| `author_publications_view` | All publications per author with venue name resolved |
-| `venue_publications_view` | All publications per venue (journals + conferences unified) |
-| `venue_author_publications_view` | Publications per venue including author links |
+| `author_publications_view` | All publications per author with venue name |
+| `venue_publications_view` | All publications per venue  |
+| `venue_author_publications_view` | Publications per venue including author |
 | `valid_publications_view` | Publications where year is not null |
 | `publisher_stats_view` | Per-publisher journal count and Q1–Q4 breakdown |
-| `journal_metrics_view` | Journal bibliometric fields (SJR, CiteScore, h-index, etc.) |
+| `journal_metrics_view` | Journal fields (SJR, CiteScore, h-index, etc.) |
 | `year_publication_details_view` | Full publication detail per year including author names |
 | `journal_category_year_view` | Publications per journal per year with subject area |
 | `conference_category_year_view` | Publications per conference per year with primary field |
@@ -218,10 +218,10 @@ Creates 9 views that pre-join tables to simplify procedure queries:
 
 ### Step 8 — Create stored procedures
 
-**Connection:** DataVisualizerUser  
+**Connection:** DataVisualizerConnection  
 **Script:** `scripts/db_procedures.sql`
 
-Creates 15 stored procedures. All application queries go through these — no SQL strings exist in Java.
+Creates 15 stored procedures. All application queries go through these
 
 | Procedure | Used by |
 |-----------|---------|
