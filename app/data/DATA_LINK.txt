@@ -1,2 +1,6 @@
-Cleaned data files (CSV) are available on Google Drive:
+Raw and cleaned data files are available on Google Drive:
 https://drive.google.com/drive/folders/1yMCPb7EATtTbE6tz32f9m2kXQvAtDUxp?usp=drive_link
+
+The folder contains:
+- raw_data/     original source files (DBLP, Kaggle, iCore26)
+- cleaned_data/ CSV files output by Pentaho, ready for MySQL loading
