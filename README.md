@@ -14,6 +14,34 @@ A desktop app for exploring academic publication data from DBLP. We clean and lo
 | JDBC Driver | MySQL Connector/J 9.7.0 |
 | IDE | IntelliJ IDEA |
 
+## Cleaned Data
+
+The raw and cleaned data files are available on Google Drive:
+
+**[Download Data](https://drive.google.com/drive/folders/1yMCPb7EATtTbE6tz32f9m2kXQvAtDUxp?usp=drive_link)**
+
+The folder contains two subfolders:
+- `raw_data/` — original source files
+- `cleaned_data/` — CSV files output by Pentaho, ready for loading into MySQL
+
+> After downloading, copy all 5 files from `cleaned_data/` to the MySQL upload directory as described in Step 4.
+
+---
+
+## Database Backup
+
+A full dump of the `data_visualizer` database is available on Google Drive:
+
+**[Download Backup](https://drive.google.com/file/d/1EGJHzhVsR38uhY-eCL54SuKuIHcgDKTt/view?usp=drive_link)**
+
+It includes the schema, all data, views, stored procedures, and the `normalize_journal()` function. To restore it, run:
+
+```bash
+mysql -u DataVisualizerUser -pDataVisualizer < data_visualizer_backup.sql
+```
+
+---
+
 ## Project Structure
 
 ```
@@ -290,34 +318,6 @@ Add the following VM options to the run configuration for `application.Main`:
 Replace `C:\...\Data_Visualizer` with the actual path to the project on your machine.
 
 **Main class:** `application.Main`
-
----
-
-## Cleaned Data
-
-The raw and cleaned data files are available on Google Drive:
-
-**[Download Data](https://drive.google.com/drive/folders/1yMCPb7EATtTbE6tz32f9m2kXQvAtDUxp?usp=drive_link)**
-
-The folder contains two subfolders:
-- `raw_data/` — original source files
-- `cleaned_data/` — CSV files output by Pentaho, ready for loading into MySQL
-
-> After downloading, copy all 5 files from `cleaned_data/` to the MySQL upload directory as described in Step 4.
-
----
-
-## Database Backup
-
-A full dump of the `data_visualizer` database is available on Google Drive:
-
-**[Download Backup](https://drive.google.com/file/d/1EGJHzhVsR38uhY-eCL54SuKuIHcgDKTt/view?usp=drive_link)**
-
-It includes the schema, all data, views, stored procedures, and the `normalize_journal()` function. To restore it, run:
-
-```bash
-mysql -u DataVisualizerUser -pDataVisualizer < data_visualizer_backup.sql
-```
 
 ---
 
