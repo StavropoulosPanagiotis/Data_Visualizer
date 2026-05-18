@@ -44,15 +44,17 @@ Data_Visualizer/
 │   ├── prepare_data_for_conference_dim.ktr
 │   ├── prepare_data_for_publication_fact.ktr
 │   └── prepare_data_for_publication_author.ktr
-├── data/                       Cleaned CSV files output by Pentaho
+├── app/data/cleaned_data/      Cleaned CSV files output by Pentaho
 │   ├── author_dim.csv
 │   ├── conference_dim.csv
 │   ├── journal_dim.csv
-│   ├── publication_fact.csv
-│   └── publication_author.csv
+│   ├── publication_fact.zip    (zipped — too large as plain CSV)
+│   └── publication_author.zip  (zipped — too large as plain CSV)
 ├── lib/                        Runtime dependencies
 │   ├── javafx-sdk-26/lib/      JavaFX 26 SDK jars
 │   └── mysql-connector-j-9.7.0.jar
+├── backup/                     Full MySQL dump (schema + data + procedures)
+│   └── data_visualizer_backup.sql
 └── deliverables/               Final report PDF + video link
 ```
 
@@ -288,6 +290,38 @@ Add the following VM options to the run configuration for `application.Main`:
 Replace `C:\...\Data_Visualizer` with the actual path to the project on your machine.
 
 **Main class:** `application.Main`
+
+---
+
+## Cleaned Data
+
+The cleaned CSV files output by Pentaho are available on Google Drive (too large for GitHub):
+
+**[Download Cleaned Data](https://drive.google.com/drive/folders/1yMCPb7EATtTbE6tz32f9m2kXQvAtDUxp?usp=drive_link)**
+
+| File | Description |
+|------|-------------|
+| `author_dim.csv` | Deduplicated author names |
+| `conference_dim.csv` | Conference dimension with rank and field |
+| `journal_dim.csv` | Journal dimension with bibliometric fields |
+| `publication_fact.csv` | All publications (journal + conference) |
+| `publication_author.csv` | Publication–author links |
+
+> After downloading, copy all 5 files to the MySQL upload directory as described in Step 4.
+
+---
+
+## Database Backup
+
+A full dump of the `data_visualizer` database is available on Google Drive (556 MB — too large for GitHub):
+
+**[Download Backup](https://drive.google.com/file/d/1EGJHzhVsR38uhY-eCL54SuKuIHcgDKTt/view?usp=drive_link)**
+
+It includes the schema, all data, views, stored procedures, and the `normalize_journal()` function. To restore it, run:
+
+```bash
+mysql -u DataVisualizerUser -pDataVisualizer < data_visualizer_backup.sql
+```
 
 ---
 
