@@ -36,9 +36,9 @@ public class YearViewModel {
 
 	public void loadYearDetail(int year, String typeFilter, String venueName, String authorName) {
 		loading.set(true);
-		Task<YearDetailBundle> task = new Task<>() {
-			@Override protected YearDetailBundle call() throws Exception {
-				return new YearDetailBundle(
+		Task<YearDetailResult> task = new Task<>() {
+			@Override protected YearDetailResult call() throws Exception {
+				return new YearDetailResult(
 					service.getYearProfile(year),
 					service.getYearPublications(year, typeFilter, venueName, authorName)
 				);
@@ -46,18 +46,18 @@ public class YearViewModel {
 		};
 		task.setOnSucceeded(e -> {
 			loading.set(false);
-			YearDetailBundle bundle = task.getValue();
-			yearProfile.set(bundle.profile);
-			publications.setAll(bundle.publications);
+			YearDetailResult result = task.getValue();
+			yearProfile.set(result.profile);
+			publications.setAll(result.publications);
 		});
 		task.setOnFailed(e -> { loading.set(false); task.getException().printStackTrace(); });
 		new Thread(task).start();
 	}
 
-	private static class YearDetailBundle {
+	private static class YearDetailResult {
 		final YearProfile profile;
 		final List<YearPublication> publications;
-		YearDetailBundle(YearProfile profile, List<YearPublication> publications) {
+		YearDetailResult(YearProfile profile, List<YearPublication> publications) {
 			this.profile = profile; this.publications = publications;
 		}
 	}

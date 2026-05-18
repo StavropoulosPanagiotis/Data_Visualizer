@@ -39,9 +39,9 @@ public class VenueViewModel {
 
 	public void loadProfile(int venueId, String venueType) {
 		loading.set(true);
-		Task<ProfileBundle> task = new Task<>() {
-			@Override protected ProfileBundle call() throws Exception {
-				return new ProfileBundle(
+		Task<ProfileResult> task = new Task<>() {
+			@Override protected ProfileResult call() throws Exception {
+				return new ProfileResult(
 					service.getVenueStats(venueId, venueType, fromYear, toYear),
 					service.getVenueYearDetail(venueId, venueType, fromYear, toYear),
 					service.getVenuePublications(venueId, venueType, fromYear, toYear)
@@ -50,20 +50,20 @@ public class VenueViewModel {
 		};
 		task.setOnSucceeded(e -> {
 			loading.set(false);
-			ProfileBundle bundle = task.getValue();
-			venueStats.set(bundle.stats);
-			yearDetails.setAll(bundle.yearDetails);
-			publications.setAll(bundle.publications);
+			ProfileResult result = task.getValue();
+			venueStats.set(result.stats);
+			yearDetails.setAll(result.yearDetails);
+			publications.setAll(result.publications);
 		});
 		task.setOnFailed(e -> { loading.set(false); task.getException().printStackTrace(); });
 		new Thread(task).start();
 	}
 
-	private static class ProfileBundle {
+	private static class ProfileResult {
 		final VenueStats stats;
 		final List<VenueYearDetail> yearDetails;
 		final List<VenuePublication> publications;
-		ProfileBundle(VenueStats stats, List<VenueYearDetail> yearDetails, List<VenuePublication> publications) {
+		ProfileResult(VenueStats stats, List<VenueYearDetail> yearDetails, List<VenuePublication> publications) {
 			this.stats = stats; this.yearDetails = yearDetails; this.publications = publications;
 		}
 	}
