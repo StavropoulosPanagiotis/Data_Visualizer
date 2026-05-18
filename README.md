@@ -275,36 +275,6 @@ Replace `C:\...\Data_Visualizer` with the actual path to the project on your mac
 
 ---
 
-## Application Features
-
-| Tab | Description |
-|-----|-------------|
-| **Home** | Landing page with feature overview |
-| **Authors** | Search by name / year range → author profile: stats + LineChart (journals vs conferences per year) + publications table |
-| **Venues** | Search by name / type / year → venue profile: stats + LineChart (publications per year) + publications table |
-| **Years** | Year overview list → year profile: stats + filtered publications table (filter by type / venue / author) |
-| **Charts** | Publisher Stats (StackedBarChart Q1–Q4) · Category Trends (LineChart) · Journal Scatter (ScatterChart) |
-
----
-
-## Architecture
-
-The application follows **MVVM + Service + Repository** layering:
-
-```
-FXML View + Controller  →  ViewModel  →  Service  →  Repository  →  DBConnection  →  MySQL
-      (View layer)           (VM layer)    (business logic)  (data access)
-```
-
-- **View:** FXML layout + Controller (code-behind). The controller handles `@FXML` bindings and delegates all actions to the ViewModel.
-- **ViewModel:** Holds `ObservableList` and `Property` state. Every database call runs on a background thread via `Task<T>`; results are pushed to the FX thread via `setOnSucceeded`.
-- **Service:** Business logic layer. Receives raw model objects from the Repository and prepares them for the ViewModel.
-- **Repository:** Pure data access. Calls stored procedures via `CallableStatement` — no SQL strings exist anywhere in Java.
-- **DBConnection:** Singleton JDBC connection. `get()` is `synchronized` to prevent race conditions across threads.
-- **Model classes:** 15 plain data classes (DTOs) that represent the shape of each stored procedure's result set.
-
----
-
 ## Deliverables
 
 See the `deliverables/` folder for:
