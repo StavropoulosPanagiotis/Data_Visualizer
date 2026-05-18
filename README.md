@@ -295,25 +295,21 @@ Replace `C:\...\Data_Visualizer` with the actual path to the project on your mac
 
 ## Cleaned Data
 
-The cleaned CSV files output by Pentaho are available on Google Drive (too large for GitHub):
+The raw and cleaned data files are available on Google Drive:
 
-**[Download Cleaned Data](https://drive.google.com/drive/folders/1yMCPb7EATtTbE6tz32f9m2kXQvAtDUxp?usp=drive_link)**
+**[Download Data](https://drive.google.com/drive/folders/1yMCPb7EATtTbE6tz32f9m2kXQvAtDUxp?usp=drive_link)**
 
-| File | Description |
-|------|-------------|
-| `author_dim.csv` | Deduplicated author names |
-| `conference_dim.csv` | Conference dimension with rank and field |
-| `journal_dim.csv` | Journal dimension with bibliometric fields |
-| `publication_fact.csv` | All publications (journal + conference) |
-| `publication_author.csv` | Publication–author links |
+The folder contains two subfolders:
+- `raw_data/` — original source files
+- `cleaned_data/` — CSV files output by Pentaho, ready for loading into MySQL
 
-> After downloading, copy all 5 files to the MySQL upload directory as described in Step 4.
+> After downloading, copy all 5 files from `cleaned_data/` to the MySQL upload directory as described in Step 4.
 
 ---
 
 ## Database Backup
 
-A full dump of the `data_visualizer` database is available on Google Drive (556 MB — too large for GitHub):
+A full dump of the `data_visualizer` database is available on Google Drive:
 
 **[Download Backup](https://drive.google.com/file/d/1EGJHzhVsR38uhY-eCL54SuKuIHcgDKTt/view?usp=drive_link)**
 
