@@ -491,10 +491,10 @@ Invalid are rows with BOTH author and year as null
     </notepad>
     <notepad>
       <note>dblp_input_article has some rows with journal null and booktitle != null
-This means they are misclassified as articles on journals and need to be taken caren of</note>
+This means they are misclassified as articles on journals and need to be taken care of</note>
       <xloc>672</xloc>
       <yloc>112</yloc>
-      <width>461</width>
+      <width>454</width>
       <heigth>42</heigth>
       <fontname>Segoe UI</fontname>
       <fontsize>9</fontsize>

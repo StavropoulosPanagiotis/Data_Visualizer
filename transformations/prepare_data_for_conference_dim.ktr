@@ -468,13 +468,13 @@
     </notepad>
     <notepad>
       <note>We only select these fields:
-Title ,Acronym, Source ,Primary_FoR
+Title ,Acronym, Rank ,Primary_FoR
 The rest are dropped for this transformation
 </note>
       <xloc>400</xloc>
       <yloc>336</yloc>
-      <width>272</width>
-      <heigth>81</heigth>
+      <width>237</width>
+      <heigth>68</heigth>
       <fontname>Segoe UI</fontname>
       <fontsize>8</fontsize>
       <fontbold>N</fontbold>
