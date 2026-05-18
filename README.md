@@ -253,13 +253,15 @@ Creates 15 stored procedures. All application queries go through these
 
 ### Connection Configuration
 
-Create the file `app/src/db.ini` (not committed — contains credentials):
+The file `app/src/db.ini` is included in the repository and pre-configured to connect using the user created in Step 1:
 
 ```ini
 db.url=jdbc:mysql://localhost:3306/data_visualizer
 db.user=DataVisualizerUser
 db.password=DataVisualizer
 ```
+
+No changes are needed if you followed the database setup steps above.
 
 ### IntelliJ Run Configuration
 
