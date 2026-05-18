@@ -1,17 +1,5 @@
 # Data Visualizer
 
-## Team
-
-| Name | AM |
-|------|----|
-| Σταυρόπουλος Παναγιώτης | [ΑΜ] |
-
-## Course
-
-**MYE030 / ΠΛΕ045** — Προχωρημένα Θέματα Τεχνολογίας & Εφαρμογών Βάσεων Δεδομένων  
-Τμήμα Μηχανικής Η/Υ & Πληροφορικής, Πανεπιστήμιο Ιωαννίνων  
-Εαρινό Εξάμηνο 2025–2026
-
 ## Overview
 
 Academic bibliographic data integration and visualization system. Raw publication records from DBLP (journal articles and conference papers) are extracted, transformed, and loaded into a relational MySQL database, then exposed through an interactive JavaFX desktop application with search, filtering, statistical profiles, and charts.
