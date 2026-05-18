@@ -42,6 +42,27 @@ mysql -u DataVisualizerUser -pDataVisualizer < data_visualizer_backup.sql
 
 ---
 
+## Project Structure
+
+```
+├── app/                Java + JavaFX application
+│   └── src/
+│       ├── application/    Entry point
+│       ├── db/             JDBC connection
+│       ├── model/          DTO classes
+│       ├── repository/     DB access (stored procedures)
+│       ├── service/        Business logic
+│       ├── viewmodel/      JavaFX Tasks + ObservableLists
+│       └── gui/            Controllers + FXML views
+├── scripts/            SQL scripts (schema, load, views, procedures)
+├── transformations/    Pentaho ETL (.ktr / .kjb)
+├── lib/                JavaFX SDK + MySQL connector
+├── backup/             Google Drive link to full DB backup
+└── deliverables/       Report + video
+```
+
+---
+
 ## Database Setup
 
 Follow these steps in order to setup the DB correctly. All scripts are in the `scripts/` folder.
