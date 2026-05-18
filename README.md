@@ -2,7 +2,7 @@
 
 ## Overview
 
-Academic bibliographic data integration and visualization system. Raw publication records from DBLP (journal articles and conference papers) are extracted, transformed, and loaded into a relational MySQL database, then exposed through an interactive JavaFX desktop application with search, filtering, statistical profiles, and charts.
+A desktop app for exploring academic publication data from DBLP. We clean and load the data into MySQL using Pentaho, then browse it through a JavaFX interface with search, filters, stats, and charts.
 
 ## Technology Stack
 
