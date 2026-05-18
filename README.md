@@ -42,52 +42,6 @@ mysql -u DataVisualizerUser -pDataVisualizer < data_visualizer_backup.sql
 
 ---
 
-## Project Structure
-
-```
-Data_Visualizer/
-├── app/                        Java + JavaFX application (IntelliJ project)
-│   └── src/
-│       ├── application/        Main.java — JavaFX entry point
-│       ├── db/                 DBConnection.java — JDBC connection
-│       ├── model/              15 model classes (one per query result shape)
-│       ├── repository/         4 repository classes (CallableStatement wrappers)
-│       ├── service/            4 service classes (business logic)
-│       ├── viewmodel/          4 ViewModel classes (JavaFX Task + ObservableList)
-│       └── gui/
-│           ├── MainWindow.java
-│           ├── controller/     4 FXML controllers
-│           └── view/           5 FXML layout files
-├── scripts/                    SQL scripts (run in order — see Database Setup)
-│   ├── create_user.sql
-│   ├── create_schema.sql
-│   ├── handle_journal_abbreviations.sql
-│   ├── load_data.sql
-│   ├── db_views.sql
-│   └── db_procedures.sql
-├── transformations/            Pentaho .ktr / .kjb transformation files
-│   ├── prepare_and_clean_data.kjb          (main job, calls all transforms)
-│   ├── prepare_data_for_author_dim.ktr
-│   ├── prepare_data_for_journal_dim.ktr
-│   ├── prepare_data_for_conference_dim.ktr
-│   ├── prepare_data_for_publication_fact.ktr
-│   └── prepare_data_for_publication_author.ktr
-├── app/data/cleaned_data/      Cleaned CSV files output by Pentaho
-│   ├── author_dim.csv
-│   ├── conference_dim.csv
-│   ├── journal_dim.csv
-│   ├── publication_fact.zip    (zipped — too large as plain CSV)
-│   └── publication_author.zip  (zipped — too large as plain CSV)
-├── lib/                        Runtime dependencies
-│   ├── javafx-sdk-26/lib/      JavaFX 26 SDK jars
-│   └── mysql-connector-j-9.7.0.jar
-├── backup/                     Full MySQL dump (schema + data + procedures)
-│   └── data_visualizer_backup.sql
-└── deliverables/               Final report PDF + video link
-```
-
----
-
 ## Database Setup
 
 Follow these steps in order to setup the DB correctly. All scripts are in the `scripts/` folder.
