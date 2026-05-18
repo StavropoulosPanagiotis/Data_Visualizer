@@ -45,6 +45,7 @@ mysql -u DataVisualizerUser -pDataVisualizer < data_visualizer_backup.sql
 ## Project Structure
 
 ```
+Data_Visualizer/
 ├── app/                Java + JavaFX application
 │   └── src/
 │       ├── application/    Entry point
