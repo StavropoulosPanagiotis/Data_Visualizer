@@ -18,7 +18,6 @@ public class AuthorRepository {
 	 * @param name partial or full author name to match
 	 * @param fromYear start of the publication year range
 	 * @param toYear end of the publication year range
-	 * @param limit max number of results to return
 	 * @return list of matching authors with their publication counts
 	 * @throws SQLException
 	 */

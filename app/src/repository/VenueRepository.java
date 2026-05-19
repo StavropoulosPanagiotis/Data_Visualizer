@@ -19,7 +19,6 @@ public class VenueRepository {
 	 * @param type {@code "journal"}, {@code "conference"}, or empty string for all
 	 * @param fromYear start of the publication year range
 	 * @param toYear end of the publication year range
-	 * @param limit maximum number of results to return
 	 * @return list of matching venues with type, rank, and publication count
 	 */
 	public List<VenueResult> searchVenues(String name, String type, int fromYear, int toYear) throws SQLException {
