@@ -53,7 +53,7 @@ Data_Visualizer/
 │       ├── model/          DTO classes
 │       ├── repository/     DB access (stored procedures)
 │       ├── service/        Business logic
-│       ├── viewmodel/      JavaFX Tasks + ObservableLists
+│       ├── viewmodel/      JavaFX Tasks
 │       └── gui/            Controllers + FXML views
 ├── scripts/            SQL scripts (schema, load, views, procedures)
 ├── transformations/    Pentaho ETL (.ktr / .kjb)
