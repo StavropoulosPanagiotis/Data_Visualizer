@@ -37,7 +37,7 @@ A full dump of the `data_visualizer` database is available on Google Drive:
 It includes the schema, all data, views, stored procedures, and the `normalize_journal()` function. To restore it, run:
 
 ```bash
-mysql -u DataVisualizerUser -pDataVisualizer < data_visualizer_backup.sql
+mysql -u root -p < data_visualizer_backup.sql
 ```
 
 ---
