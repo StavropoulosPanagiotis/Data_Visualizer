@@ -39,9 +39,9 @@
       <GridPane hgap="12" vgap="3">
        <Label text="Total publications:" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
        <Label fx:id="statTotal" GridPane.columnIndex="1" GridPane.rowIndex="0"/>
-       <Label text="Distinct journals:" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
+       <Label text="Journal publications:" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
        <Label fx:id="statJournals" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
-       <Label text="Distinct conferences:" GridPane.columnIndex="0" GridPane.rowIndex="2"/>
+       <Label text="Conference publications:" GridPane.columnIndex="0" GridPane.rowIndex="2"/>
        <Label fx:id="statConferences" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
        <Label text="Total authors:" GridPane.columnIndex="0" GridPane.rowIndex="3"/>
        <Label fx:id="statTotalAuthors" GridPane.columnIndex="1" GridPane.rowIndex="3"/>

@@ -70,8 +70,8 @@ public class YearController {
 		viewModel.yearProfileProperty().addListener((obs, old, profile) -> {
 			if (profile == null) { clearStats(); return; }
 			statTotal.setText(String.valueOf(profile.getTotalPublications()));
-			statJournals.setText(String.valueOf(profile.getDistinctJournals()));
-			statConferences.setText(String.valueOf(profile.getDistinctConferences()));
+			statJournals.setText(String.valueOf(profile.getJournalCount()));
+			statConferences.setText(String.valueOf(profile.getConfCount()));
 			statTotalAuthors.setText(String.valueOf(profile.getTotalAuthors()));
 			statDistinctAuthors.setText(String.valueOf(profile.getDistinctAuthors()));
 		});

@@ -233,8 +233,8 @@ CREATE PROCEDURE year_profile_procedure(
 BEGIN
 	SELECT
 		COUNT(DISTINCT valid_publications_view.publication_id) AS total_publications,
-		COUNT(DISTINCT valid_publications_view.journal_id) AS distinct_journals,
-		COUNT(DISTINCT valid_publications_view.conference_id) AS distinct_conferences,
+		SUM(valid_publications_view.type = 'journal') AS distinct_journals,
+		SUM(valid_publications_view.type = 'conference') AS distinct_conferences,
 		COUNT(publications_authors.author_id) AS total_authors,
 		COUNT(DISTINCT publications_authors.author_id) AS distinct_authors
 	FROM valid_publications_view
