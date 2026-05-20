@@ -47,6 +47,7 @@ mysql -u root -p < data_visualizer_backup.sql
 ```
 Data_Visualizer/
 ├── app/                Java + JavaFX application
+│   ├── lib/            JavaFX SDK + MySQL connector
 │   └── src/
 │       ├── application/    Entry point
 │       ├── db/             JDBC connection
@@ -57,7 +58,6 @@ Data_Visualizer/
 │       └── gui/            Controllers + FXML views
 ├── scripts/            SQL scripts (schema, load, views, procedures)
 ├── transformations/    Pentaho ETL (.ktr / .kjb)
-├── lib/                JavaFX SDK + MySQL connector
 ├── backup/             Google Drive link to full DB backup
 └── deliverables/       Report + video
 ```
@@ -285,10 +285,18 @@ No changes are needed if you followed the database setup steps above.
 
 ### IntelliJ Run Configuration
 
-Add the following VM options to the run configuration for `application.Main`:
+**1. Add the MySQL connector to the classpath:**
+
+Go to **File → Project Structure → Modules → Dependencies tab**, click **+** → **JARs or directories**, and select:
 
 ```
---module-path "C:\...\Data_Visualizer\lib\javafx-sdk-26\lib" --add-modules javafx.controls,javafx.fxml,javafx.graphics
+app\lib\mysql-connector-j-9.7.0\mysql-connector-j-9.7.0.jar
+```
+
+**2. Add the following VM options to the run configuration for `application.Main`:**
+
+```
+--module-path "C:\...\Data_Visualizer\app\lib\javafx-sdk-26\lib" --add-modules javafx.controls,javafx.fxml,javafx.graphics
 ```
 
 Replace `C:\...\Data_Visualizer` with the actual path to the project on your machine.
