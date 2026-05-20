@@ -18,7 +18,7 @@ A desktop app for exploring academic publication data from DBLP. We clean and lo
 
 The raw and cleaned data files are available on Google Drive:
 
-**[Download Data](https://drive.google.com/drive/folders/1yMCPb7EATtTbE6tz32f9m2kXQvAtDUxp?usp=drive_link)**
+**[Download Data](https://drive.google.com/drive/folders/1jW5OMboNtNVbjTK5mvzxaivzhz-3OCF0?usp=drive_link)**
 
 The folder contains two subfolders:
 - `raw_data/` — original source files
@@ -32,7 +32,7 @@ The folder contains two subfolders:
 
 A full dump of the `data_visualizer` database is available on Google Drive:
 
-**[Download Backup](https://drive.google.com/file/d/1EGJHzhVsR38uhY-eCL54SuKuIHcgDKTt/view?usp=drive_link)**
+**[Download Backup](https://drive.google.com/file/d/1OT-e_gmSEroM7prKjvFfx2kGQqNbA3Lw/view?usp=drive_link)**
 
 It includes the schema, all data, views, stored procedures, and the `normalize_journal()` function. To restore it, run:
 
